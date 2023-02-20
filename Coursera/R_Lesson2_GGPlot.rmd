@@ -1,6 +1,6 @@
 ---
 title: 'C7M4L2A1: You and GGPlot'
-output: html_document
+output: github_document
 ---
 
 ## Background for this activity
