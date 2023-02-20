@@ -69,7 +69,13 @@ First, you decide to create a bar chart showing each hotel type and market segme
 
 ```{r bar chart}
 ggplot(data = hotel_bookings) +
-  geom_bar(mapping = aes(x = hotel, fill = market_segment))
+  geom_bar(mapping = aes(x = hotel, fill = market_segment))+
+  labs(title = "Hotel types and market segments",
+       subtitle = "Which market segments generate the largest number of bookings, and where these bookings are made (city hotels or resort hotels)",
+       caption = paste("Last updated:", as.character(today()-1) ) )+
+  annotate("text", x= 1.8, y= 4.5e4, label= "The cap", 
+           color= "red", size= 8, fontface="italic") ;
+ggsave("Hotel_types_and_market_segments.pdf")
 ```
 
 The geom_bar() function uses bars to create a bar chart. The chart has 'hotel' on the x-axis and 'count' on the y-axis (note: if you don't specify a variable for the y-axis, the code defaults to 'count'). The code maps the 'fill' aesthetic to the variable 'market_segment' to generate color-coded sections inside each bar.
