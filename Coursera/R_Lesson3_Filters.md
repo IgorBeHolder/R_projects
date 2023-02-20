@@ -193,7 +193,7 @@ function, add the variable ‘market_segment’ after the tilde symbol (\~):
 
 ``` r
 ggplot(data = hotel_bookings) +
-  geom_bar(mapping = aes(x = hotel)) +
+  geom_bar(mapping = aes(x = hotel, fill = deposit_type )) +
   facet_wrap(~market_segment)
 ```
 
@@ -413,10 +413,10 @@ the code chunk below with either `onlineta_city_hotels` or
 
 ``` r
 ggplot(data = onlineta_city_hotels_v2) +
-  geom_point(mapping = aes(x = lead_time, y = children))
+  geom_violin(mapping = aes(x = lead_time, y = children ))
 ```
 
-    ## Warning: Removed 1 rows containing missing values (`geom_point()`).
+    ## Warning: Removed 1 rows containing non-finite values (`stat_ydensity()`).
 
 ![](R_Lesson3_Filters_files/figure-gfm/creating%20a%20plot%20part%20two-1.png)<!-- -->
 
