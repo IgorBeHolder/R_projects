@@ -2,7 +2,9 @@
 title: "Test_markdown"
 author: "Igr Sorochan"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
