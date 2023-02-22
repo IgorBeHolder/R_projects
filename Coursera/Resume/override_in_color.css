@@ -1,0 +1,63 @@
+* {
+  /* Override default margins*/
+  --pagedjs-margin-right: 0in;
+  --pagedjs-margin-left: 0.2in;
+  --pagedjs-margin-top: 0.2in;
+  --pagedjs-margin-bottom: 0.2in;
+}
+
+
+:root{
+  --sidebar-width: 12rem;
+  --sidebar-background-color: #a2e2e2;  
+  --sidebar-horizontal-padding: 0.2in;
+  --sidebar-background-width: calc(var(--pagedjs-margin-right) + var(--sidebar-width));
+  --decorator-border: 2px solid #a2e2e2; /* change color and thickness of timeline. #f2f2f2 */
+  --decorator-outer-dim: 9px; /*size of color dots at left */
+
+}
+
+.decorator::after{
+  background-color: #a2e2e2; /* change color timeline dots */
+
+}
+
+
+/* Define the font family here */
+body{
+  /* contact, skills, year line, concise columns */
+  font-family: "Open Sans", sans-serif;  /* Open Sans or Roboto */
+  color: yellow;
+
+}
+
+  
+.details header{
+  /* line under h3 */
+  color: green;
+}
+
+
+h1, h2, h3{
+  text-transform: capitalize;
+  color: red;
+}
+
+@page{
+  background: linear-gradient(to left, 
+  var(--sidebar-background-color), 
+  var(--sidebar-background-color) calc(var(--sidebar-background-width)*1.001), 
+  var(--sidebar-background-color) calc(var(--sidebar-background-width)*1.0015), 
+  white calc(var(--sidebar-background-width)*1.002),
+  grey)
+}
+  
+  #main h2{
+    /* h2 afer icon. */
+  color: orange;
+}
+
+#main h2 > i{
+  /*. icons. */
+  color: brown;
+}

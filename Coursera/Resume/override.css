@@ -1,0 +1,109 @@
+* {
+  /* 
+  Default css settings in ../paged-0.20/css/resume.css
+  
+  Override default margins
+  */
+  --pagedjs-margin-right: 0in;
+  --pagedjs-margin-left: 0.1in;
+  --pagedjs-margin-top: 0.1in;
+  --pagedjs-margin-bottom: 0.1in;
+}
+
+
+:root{
+  --sidebar-width: 13rem;
+  --sidebar-background-color: #d7fcfc;  
+  --sidebar-horizontal-padding: 0.2in;
+  --content-width: calc(var(--page-width) - var(--margin-left));  
+  --sidebar-background-width: calc(var(--pagedjs-margin-right) + var(--sidebar-width));
+  --decorator-border: 2px solid #69c2c2; /* change color and thickness of timeline. #f2f2f2 */
+  --decorator-outer-dim: 9px; /*size of color dots at left */
+  --text-color: #666;
+  --icon-color: #69c2c2
+
+}
+
+.decorator::after{
+  background-color: #69c2c2; /* change color timeline dots */
+
+}
+
+
+/* Define the font family here */
+body{
+  /* contact, skills, year line, concise columns YELLOW */
+  font-family: "Open Sans", sans-serif;  /* Open Sans or Roboto */
+  color: var(--text-color);
+
+}
+
+  
+.details header{
+  /* line under h3 GREEN*/
+  color: var(--text-color);
+}
+
+
+h1, h2{
+  text-transform: uppercase;
+}
+
+h1, h2, h3{
+  color: var(--text-color);
+}
+
+#main h2{
+    /* h2 afer icon. ORANGE */
+  color: var(--icon-color);
+}
+
+#main h2 > i{
+  /*. icons. BROWN. */
+  color: var(--icon-color);
+}
+
+/*. gradient bacground
+@page{
+  background: linear-gradient(to left, 
+  var(--sidebar-background-color), 
+  var(--sidebar-background-color) calc(var(--sidebar-background-width)*1.001), 
+  var(--sidebar-background-color) calc(var(--sidebar-background-width)*1.0015), 
+  white calc(var(--sidebar-background-width)*1.002),
+  white)
+}
+*/
+  
+.left-side {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 74%;
+  height: 100%;
+  background-color: white;
+}
+
+.right-side {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(var(--sidebar-background-width)*2);
+  height: 100%;
+  background-color: var(--sidebar-background-color);  
+}
+
+#disclaimer{
+  position: absolute;
+  bottom: 0rem;
+  right: var(--sidebar-horizontal-padding);
+  font-size: 0.75rem;
+  font-style: italic;
+  line-height: 1.1;
+  text-align: right;
+  color: #c7c7c7;
+}
+
+#aside{
+  position: absolute; /* for disclaimer */
+  height: 99%;
+}

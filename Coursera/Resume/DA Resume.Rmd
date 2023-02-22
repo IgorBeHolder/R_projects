@@ -1,0 +1,172 @@
+---
+title: "Igor Sorochan's resume"
+author: Igor Sorochan
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_resume:
+    css: 
+      - override.css         # OVERIDE CERTAIN FUNCTIONS OF CSS
+      - resume               # DEFAULT FILE
+    # set it to true for a self-contained HTML page but it'll take longer to render
+    self_contained: false
+# uncomment this line to produce HTML and PDF in RStudio:
+knit: pagedown::chrome_print
+---
+
+# Aside
+
+![Open to work](https://media.licdn.com/dms/image/D4D03AQG0bB03wVx85g/profile-displayphoto-shrink_800_800/0/1675262721702?e=1682553600&v=beta&t=ukzPSHEl_RbUdFmoARNyflLXmRGx0VjyKA79h89FCBc){width="80%"}
+
+## Contact Info {#contact}
+
+-   <i class="fa fa-envelope"></i> [isorochan\@gmail.com](mailto:isorochan@gmail.com){.email}
+-   <i class="fa fa-github"></i> [github.com/IgorBeHolder](https://github.com/IgorBeHolder)
+-   <i class="fa fa-kaggle"></i> [kaggle.com/igorsorochan](https://www.kaggle.com/igorsorochan/competitions)
+-   <i class="fa fa-phone"></i> +90 535-639-8703
+-   For more information, please contact me via email.
+
+## Skills {#skills}
+
+
+* Highly skilled in **Python** (pandas, numpy, plotly, web parsing),
+* **SQL** (joins, windows, triggers).  
+Create comprehensive reports in R, Tableau.  
+Conduct statistical analysis, statistical learning models
+and optimization methods.
+
+Years of experience as a small business owner and well understanding of business needs.
+
+
+## Disclaimer {#disclaimer}
+
+This resume was made with the R package **pagedown**
+<!-- [**pagedown**](https://github.com/rstudio/pagedown). -->
+
+Last updated on `r Sys.Date()`.
+
+# Main
+
+## Igor Sorochan {#title}
+
+### Currently searching for a Data Analyst position
+
+## Professional Experience {data-icon="suitcase"}
+
+### Career transition
+
+Transitioning from a career in the digital printing industry and seeking a full-time role in the field of data analytics
+
+Antalya, Turkey
+
+2023
+
+::: concise
+-   Intensive self education
+-   Well organized, self-disciplined
+-   Data-driven, passionate about details
+-   Responsible and attentive to deadlines
+:::
+
+### Technical Director
+
+[ROSTOprint, Ltd.](https://www.rostoprint.ru/prod/odezhda/futbolki/)
+
+Moscow, Russia
+
+2008 - 2022
+
+::: concise
+-   Found and run a digital textile printing company ROSTOprint.
+-   Strong reputation and valuable customers such as Marriott, Holiday Inn, French embassy in Moscow, Malta embassy in Moscow and many others
+-   Leadership, perseverance, passion and grit
+-   Pioneering a fluorescent digital printing
+-   Original on-site technologies
+-   Skills: negotiations, PostgreSQL
+
+:::
+
+### Graphic Designer
+
+Self employed
+
+Moscow, Russia
+
+2001 - 2008
+
+::: concise
+-   Designing logos, brand books
+-   Negotiations with customers
+-   Skills: Adobe Photoshop, Illustrator, Corel Draw
+:::
+
+### Government treasury bonds lead broker
+
+Joint Stock Bank "Moscow Bill Bank"
+
+Moscow, Russia
+
+1995 - 2001
+
+::: concise
+-   Qualified Specialist of the Federal Commission on the Stock Market
+-   Buying and selling government treasury bonds
+-   Development of real-time market monitoring system
+-   Skills: Statistics, SQL, Clipper dBase
+:::
+
+## Education {data-icon="graduation-cap" data-concise="true"}
+
+### From beginner to Midlle data scientist
+
+18 month online program
+
+Netology, online
+
+2022 - 2023
+
+-   Statistics
+-   SQL
+-   Python for Data Science
+-   ML, DL, NN
+
+### Moscow State University of Economics, Statistics and Informatics (MESI)
+
+Bachelor's degree,
+Banking and Financial Support Services
+
+Moscow, Russia
+
+1991 - 1995
+
+## Accomplishments {data-icon="laptop"}
+<!-- Licenses & certifications -->
+### Google Data Analytics Professional Certificate
+
+Google
+
+Coursera, online
+
+
+
+2023
+
+-   Capstone project
+-   6 month, 8 courses program
+-   Among 0.7% of best  (24 out of 3091 students) "Churn rate prediction" Catboost ML modeling
+
+
+
+## Hobbies {data-icon="bicycle"}
+
+### Amateur cyclist and photographer
+
+And yes, I love cycling, especially MTB.  
+Head and legs should work equally well)
+
+Single tracks
+
+All year round
+
+
+<div class="left-side"></div>
+<div class="right-side"></div>

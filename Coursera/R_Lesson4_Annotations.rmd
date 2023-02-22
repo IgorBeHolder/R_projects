@@ -6,6 +6,10 @@ output:
     toc_depth: 2
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 ## Background for this activity
 
 In this activity, you'll review a scenario, and practice adding annotations to a data visualization with ggplot2. You will also learn how to save images from ggplot2 visualizations so that you can add them directly to presentations.
