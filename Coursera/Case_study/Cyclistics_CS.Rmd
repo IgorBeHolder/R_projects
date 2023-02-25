@@ -1,0 +1,944 @@
+---
+title: "Coursera Caapstone Project. Cyclistic bike-share. R Notebook"
+author: "Igr Sorochan"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+  github_document:
+    toc: yes
+    toc_depth: 4
+editor_options:
+  markdown:
+    wrap: 72
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+```
+
+|                                                                                                                                                                |     |                                                                                                                                                                                                                                  |
+|----------------------|------------------|--------------------------------|
+| ![](https://images.ctfassets.net/00atxywtfxvd/2MlqAOzmHjSPtssv6HlNox/1cb35b40775835a5f574ebc5509907a1/coursera-wordmark-blue.svg){width="100" height="14"}     |     | ![](https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/http://coursera-university-assets.s3.amazonaws.com/fa/79e521abf14610b4fec9d677901916/0.png?auto=format%252Ccompress&dpr=2&w=&h=45){width="90" height="29"} |
+| Coursera is the global online learning platform that offers anyone, anywhere access to online courses and degrees from world-class universities and companies. |     | Google is an American multinational corporation specializing in internet-related services and products.                                                                                                                          |
+
+### Capstone project for Google Data Analytics Professional Certificate
+
+# Case Study 1 Case Study: How Does a Bike-Share Navigate Speedy Success?
+
+## 1. ASK
+
+### Scenario
+
+I'm a junior data analyst working in the marketing analyst team at
+Cyclistic, a bike-share company in Chicago.\
+Lily Moreno, the director of marketing, believes the company's future
+success depends on maximizing the number of annual memberships.
+Therefore, my team wants to understand\
+
+**How casual riders and annual members use Cyclistic bikes
+differently?**\
+
+### Settings
+
+**About the company**
+
+In 2016, Cyclistic launched a successful bike-share offering. Since
+then, the program has grown to a fleet of 5,824 bicycles that are
+geotracked and locked into a network of 692 stations across Chicago. The
+bikes can be unlocked from one station and returned to any other station
+in the system anytime.
+
+Until now, Cyclistic's marketing strategy relied on building general
+awareness and appealing to broad consumer segments. One approach that
+helped make these things possible was the flexibility of its pricing
+plans: single-ride passes, full-day passes, and annual memberships.
+Customers who purchase single-ride or full-day passes are referred to as
+casual riders. Customers who purchase annual memberships are Cyclistic
+members.
+
+Cyclistic's finance analysts have concluded that annual members are much
+more profitable than casual riders. Although the pricing flexibility
+helps Cyclistic attract more customers, Moreno believes that
+**maximizing the number of annual members** will be **key to future
+growth**. Rather than creating a marketing campaign that targets all-new
+customers, Moreno believes there is a very good chance **to convert
+casual riders into members**. She notes that casual riders are already
+aware of the Cyclistic program and have chosen Cyclistic for their
+mobility needs. Moreno has set a clear goal: **Design marketing
+strategies aimed at converting casual riders into annual members**. In
+order to do that, however, the marketing analyst team needs to better
+understand how annual members and casual riders differ, why casual
+riders would buy a membership, and how digital media could affect their
+marketing tactics. Moreno and her team are interested in analyzing the
+Cyclistic historical bike trip data to identify trends.
+
+### **Questions my team has to answer:**
+
+1.  How casual riders and annual members use Cyclistic bikes
+    differently?
+
+2.  Why would casual riders buy Cyclistic annual memberships?
+
+3.  How can Cyclistic use digital media to influence casual riders to
+    become members?
+
+### Project stakeholders
+
+**Primary stakeholders:**
+
+-   Cyclistic executive team
+
+-   Lily Moreno, the director of marketing
+
+**Secondary stakeholders:**
+
+-   Cyclistic marketing analytics team
+
+From these insights, my team will design a new marketing strategy to
+convert casual riders into annual members.
+
+My team has to produce a report with the following deliverables:
+
+1\. A clear statement of the business task
+
+2\. A description of all data sources used
+
+3\. Documentation of any cleaning or manipulation of data
+
+4\. A summary of your analysis
+
+5\. Supporting visualizations and key findings
+
+6\. Your top three recommendations based on your analysis
+
+## 2. PREPARE
+
+### What are data sources used?
+
+Documentation of any cleaning or manipulation of data
+
+#### Data location
+
+We'll use Cyclistic's historical trip data to analyze and identify
+trends. The data has been made available by Motivate International Inc.
+under [this license.](https://www.divvybikes.com/data-license-agreement)
+
+#### Data organization
+
+The data is stored in zip files
+[here](https://divvy-tripdata.s3.amazonaws.com/index.html).\
+Every zip file includes one month data.\
+The time scope of our analysis is at least 12 previous months.\
+We have already downloaded zip files and put them into `Divvy-tripdata`
+folder in our project working directory.\
+Csv files we plan to unzip into `Divvy-tripdata/csv` folder.
+
+#### Data credibility and data bias
+
+#### Data ethics
+
+\
+At first glance, the overall dataset would be **Large** enough to
+process and will force any available spreadsheet software to struggle,
+so our team decided to use R to handle it.\
+Let's do that.
+
+Setting the environment.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(janitor)
+library(lubridate)
+library(ggplot2)
+library(plotly)
+library(scales)
+library(skimr)
+library(sf)
+options(dplyr.summarise.inform = FALSE)
+```
+
+Take a mention on the current working folder in output of `getwd()` and
+if redefine it if needed:
+
+```{r}
+getwd()
+# uncomment and redefine it if needed (use your actual folder)
+# setwd("../Coursera/Case_study/")
+```
+
+Defining the directory where all original zip files will be placed:
+
+```{r}
+zip_dir<- paste0(getwd(),"/Divvy_tripdata/") 
+```
+
+Defining the directory csv files to extract:
+
+```{r}
+csv_Dir<- paste0(getwd(),"/Divvy_tripdata/csv/") 
+```
+
+Auto unzipping files to `zip_dir`:
+
+```{r}
+files <- list.files(path = zip_dir, pattern = "*.zip")
+for (i in files) {
+  unzip(paste0(zip_dir,i), exdir=csv_Dir)
+}
+```
+
+Reading csv files and nesting them into Large list (almost 2Gb).\
+Wait a little bit, please. Need a minute to execute:
+
+```{r}
+temp <- list.files(path = csv_Dir, pattern = "*.csv")
+myfiles <- lapply(paste0(csv_Dir,temp), read.csv)
+```
+
+So we have all the data we need in one place. \
+We haven't performed any data manipulations so far.\
+Let's go further.
+
+## 3. PROCESS
+
+### **Do the data frames have the same columns & types?**
+
+Let's check it out:
+
+```{r}
+janitor::compare_df_cols_same(myfiles)
+```
+
+TRUE - means that all columns in all data frames have appropriate names
+and types of data.\
+The alternative method is to print out any mismatches:
+
+```{r}
+janitor::compare_df_cols(myfiles, return = "mismatch")
+```
+
+Returned 0 rows -\> all data frames are ready to bind.
+
+### Finally forming united table.
+
+Binding data frames by row, making a longer result (few seconds to
+execute, don't panic):
+
+```{r}
+raw_df <- dplyr::bind_rows(myfiles)
+```
+
+Let's look in:
+
+```{r}
+head(raw_df)
+```
+
+### We need to convert date related columns to appropriate type:
+
+```{r}
+raw_df$started_at = ymd_hms(raw_df$started_at) 
+raw_df$ended_at = ymd_hms(raw_df$ended_at) 
+```
+
+#### Adding a calculated columns
+
+It is obvious that we'll need a duration information in our analysis.\
+Let's add a calculated column `trip_duration` that counts trip duration
+in **minutes**.
+
+```{r}
+raw_df[,"trip_duration"] <- as.numeric(as.duration(raw_df$ended_at - raw_df$started_at), "minutes")
+```
+
+Let's evaluate values domain for integrity:
+
+```{r}
+skim_without_charts(raw_df)
+```
+
+### Data integrity
+
+1.  **Domain integrity:** Domain integrity ensures that each value in a
+    column falls within the permissible range of the domain of that
+    column. Moreover, the conditions for default and null values must
+    also be met.
+
+2.  **Entity integrity:** Entity integrity ensures that each row of the
+    database has a non-null unique primary key.
+
+3.  **Referential integrity:** Referential integrity ensures a valid
+    relationship between two tables by checking the relationship between
+    the foreign key and primary key in those tables.
+
+Data set consists of 5.858.018 observations with 13 characteristics
+(columns).\
+Time scope of all trips is relevant to the scope of business problem.
+
+Quantitative (numeric and POSIXct) data:
+
+| Attribute     | min                   | max                   | number of NA | Domain integrity | **Entity integrity** | Notes                          |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| started_at    | `2022-01-01 00:00:05` | `2023-01-31 23:56:09` | 0            | \+               | \+                   |                                |
+| ended_at      | `2022-01-01 00:01:48` | `2023-02-04 04:27:03` | 0            | \+               | \+                   |                                |
+| trip_duration | -10353.35             | 41387.25              | 0            | fault            | \+                   | negatives, very high `std dev` |
+| start_lat     | 41.64                 | 45.63503              | 0            | fault            | \+                   | too big range for a city       |
+| start_lng     | -87.8                 | -73.796               | 0            | fault            | \+                   | too big range for a city       |
+| end_lat       | 0.00                  | 42.37000              | 5985         | fault            | fault                | zeros                          |
+| end_lng       | -88.1                 | 0.00000               | 5985         | fault            | fault                | zeros                          |
+
+: Qualitative (character) data:
+
+| Attribute          | empty   | number of unique | Domain integrity | **Entity integrity** | Notes                                          |
+|------------|------------|------------|------------|------------|------------|
+| ride_id            | 0       | 5858018          | \+               | \+                   | \+                                             |
+| rideable_type      | 0       | 3                | \+               | \+                   | \+                                             |
+| start_station_name | 859.785 | 1682             | \+               | fault                | number of stations is greater than station IDs |
+| start_station_id   | 859.785 | 1314             | \+               | \+                   | \+                                             |
+| end_station_name   | 920.582 | 1700             | \+               | fault                | number of stations is greater than station IDs |
+| end_station_id     | 920.582 | 1319             | \+               | \+                   | \+                                             |
+| member_casual      | 0       | 2                | \+               | \+                   | \+                                             |
+
+How many observations are affected with empty start and finish points?
+
+```{r}
+raw_df %>% 
+  filter(start_station_name == "" | end_station_name == ""  ) %>% 
+  nrow()
+```
+
+### Data issues
+
+Most of the lost of geo data fell on electric bikes:
+
+```{r}
+raw_df %>% 
+  filter(start_station_name == "" |
+           end_station_name == "" ) %>%
+  group_by(rideable_type) %>% 
+  summarise(sum= n()) %>%
+  ggplot(aes(rideable_type, y= sum )) +
+  geom_col(aes(fill= rideable_type), show.legend = FALSE) +
+  scale_y_continuous(labels = label_comma()) +
+  geom_label(aes(y = sum, x = rideable_type, label = sum,
+               color = rideable_type), hjust =0.8, vjust = 0, show.legend = FALSE)+
+  labs(title = "Trips with missing station's names by type of bike",
+       caption = "Data for the whole year",
+       x ="", y= "",
+       fill='Type of rider')+
+  theme(axis.text.y=element_blank(),
+        axis.text = element_text(size = 16) ) 
+```
+
+100 observations have negative trip duration.
+
+```{r}
+raw_df %>%
+  filter(trip_duration < 0) %>%
+  group_by(rideable_type) %>%
+  summarise(sum= n()) %>%
+  ggplot(aes(rideable_type, y= sum )) +
+  geom_col(aes(fill= rideable_type), show.legend = FALSE) +
+  scale_y_continuous(labels = label_comma()) +
+  geom_label(aes(y = sum, x = rideable_type, label = sum,
+               color = rideable_type), hjust =.5, vjust = 1, show.legend = FALSE)+
+  labs(title = "Trips with negative ride duration by type of bike",
+       caption = "Data for the whole year",
+       x ="", y= "",
+       fill='Type of rider')+
+  theme(axis.text.y=element_blank(),
+        axis.text = element_text(size = 16) )
+
+```
+
+The data is not clean:
+
+1.  5985 trips (0.1% of all trips) have no gps data at all. This concern
+    we might take into account if we'll plan to investigate routes. Some
+    observations at end stations include zeros.
+
+2.  Station's naming is not consistent. Number of station,s ID is less
+    than station's names.
+
+3.  1.340.374 (23 % of all trips) of data concerning station's names is
+    empty. 99,5 % among them are electric bikes.
+
+4.  Some `started_at` is greater than `ended_at` It means negative
+    `trip_duration` .
+
+5.  Standard deviation of `trip_duration` is unreasonably high: ( 175
+    min, while mean =19 min). This clearly indicates the presence of
+    outliers.
+
+Solutions:
+
+1.  Exclude data with negative `trip_duration` (100 observations)
+
+2.  Exclude data with too big `trip_duration` (greater than 1499
+    minutes) and with simultaneously empty `end_station_name` .
+
+3.  Restore stations ID by geo data where possible. Maybe this won't
+    screw the overall patterns but it's better to restore the missing
+    data.
+
+Visual checking the data distribution of trips with missing station's
+names:
+
+#### Dropping irrelevant data
+
+Let's take a look on "strange" observations where\
+`trip_duration > 1499 & rideable_type != "docked_bike"`
+
+```{r}
+raw_df %>% 
+  filter(trip_duration > 1499 &
+           rideable_type != "docked_bike" ) %>% 
+  select("trip_duration") %>% 
+  arrange(trip_duration)
+```
+
+We'll drop all observations with:
+
+1.  `rideable_type = "docked_bike"` to exclude service observations.
+
+2.  `trip_duration` \> 1499 minutes ( \> 8 sigma) or `trip_duration` \<
+    0 and
+
+3.  `end_station_name` is empty
+
+```{r}
+raw_df2 <- raw_df %>% 
+  filter(rideable_type != "docked_bike" ) %>% 
+  filter(trip_duration > 0 &
+           trip_duration < 1499 ) 
+
+# &
+#            end_station_name != ""
+```
+
+### Logic behind the following restoration process:
+
+\
+1. Build a data frame (`stations_df`) with all station's names and
+appropriate geo data\
+2. Restore station's names according to the dictionary geo data.
+
+Let's try.
+
+#### **Station's names.**
+
+To avoid duplicates we round the geo data to 4 decimals places (11 m
+accuracy).
+
+```{r}
+# setting geo data accuracy (decimal places)
+geo_acc <- 4
+
+# parcing end stations
+stations_df <- raw_df2 %>% 
+    filter(end_station_name != "" & 
+             (end_lat != 0 | !is.na(end_lat) ) ) %>% 
+  group_by(end_station_name) %>% 
+
+  # we use means here to increase geo data accuracy of stations
+  summarise(latit = mean(end_lat), 
+            lngit = mean(end_lng)) %>% 
+  unique()
+
+# all columns with postfix '2' at the end will serve later as joining instances 
+stations_df[,"end_lat2"] = round(stations_df$latit,geo_acc)
+stations_df[,"end_lng2"] = round(stations_df$lngit,geo_acc)
+
+# adding station IDs
+stations_df <-
+  left_join(stations_df, raw_df2, by = c("end_station_name"), multiple = "first") %>% 
+  select("end_station_id",
+         "end_station_name",
+         "latit",
+         "lngit",
+         "end_lat2",
+         "end_lng2")
+# renaming
+stations_df <- 
+  rename(stations_df, all_of( c(station_name = "end_station_name", 
+                                station_id =  "end_station_id")) )
+
+
+# parcing start stations
+# stations_df2 - start_station data frame
+stations_df2 <- raw_df2 %>% 
+    filter(start_station_name != "" ) %>% 
+  group_by(start_station_name) %>% 
+  # all columns with '2' at the end will serve later as joining instances 
+  # we use means here to increase geo data accuracy
+  summarise(latit = mean(start_lat), 
+            lngit = mean(start_lng) ) %>% 
+  unique()
+
+# all columns with postfix '2' at the end will serve later as joining instances 
+stations_df2[,"end_lat2"] = round(stations_df2$latit,geo_acc)
+stations_df2[,"end_lng2"] = round(stations_df2$lngit,geo_acc)
+
+
+# adding station IDs
+stations_df2 <-
+  left_join(stations_df2, raw_df2, by = c("start_station_name"), multiple = "first") %>% 
+  select("start_station_id",
+         "start_station_name",
+         "latit",
+         "lngit",         
+         "end_lat2",
+         "end_lng2")
+# renaming
+stations_df2 <- 
+  rename(stations_df2, all_of( c(station_name = "start_station_name", 
+                                station_id =  "start_station_id")) )
+
+stations_df <-
+  bind_rows(stations_df, stations_df2) %>% 
+  dplyr::distinct(station_name, .keep_all = TRUE) 
+
+```
+
+```{r}
+# geo_df <-
+# stations_df %>% 
+  # filter(end_lng2 < -87)
+```
+
+```{r}
+
+chi_map <- read_sf("https://raw.githubusercontent.com/thisisdaryn/data/master/geo/chicago/Comm_Areas.geojson")
+
+  ggplot(chi_map) +
+  geom_sf() + 
+  geom_point(data = geo_df, mapping = aes(x = end_lng2, y = end_lat2),
+             size = 1, stroke = 0, color = "red") +
+  geom_text(data = geo_df, aes(x=end_lng2, y=end_lat2, label=station_name),
+            size = 3,  check_overlap = TRUE, color= "blue") # hjust=0, vjust=-1,
+```
+
+```{r}
+insp_plt <- ggplot(data = chi_map) + 
+  geom_sf() +
+  geom_point(data = geo_df, 
+             aes(x = end_lng2, y = end_lat2, 
+                 colour = "red"))  # , label=station_name
+ggplotly(insp_plt)
+```
+
+#### **Restoring station's names.**
+
+```{r}
+# copy of raw_data to keep the source data untouched
+processed_df <- raw_df2
+
+# service columns with rounded geo data
+processed_df[,"end_lat2"] <- round(processed_df$end_lat,geo_acc)
+processed_df[,"end_lng2"] <- round(processed_df$end_lng,geo_acc)
+processed_df[,"restored"] <- NA
+# head(processed_df)
+```
+
+##### Restoring `end_station_name` and `end_station_id`.
+
+```{r}
+processed_df <- 
+  left_join(processed_df, stations_df, by = c("end_lat2","end_lng2"), multiple = 'first') 
+
+# logging restoration
+processed_df$restored = 
+  ifelse(processed_df$end_station_name == "" & !is.na(processed_df$station_name),
+         "end_station_name",
+         ifelse(processed_df$end_station_id == "" & !is.na(processed_df$station_id),
+                "end_station_id", NA)
+  )
+# adding end_station_name
+processed_df$end_station_name = 
+  ifelse(processed_df$end_station_name == ""& !is.na(processed_df$station_name),
+         processed_df$station_name,
+         processed_df$end_station_name) 
+# adding end_station_id
+processed_df$end_station_id = 
+  ifelse(processed_df$end_station_id == ""& !is.na(processed_df$station_id),
+         processed_df$station_id,
+         processed_df$end_station_id) 
+```
+
+```{r}
+# nrow(processed_df)
+```
+
+```{r}
+# colnames(processed_df)
+```
+
+```{r}
+# dropping service joining columns
+processed_df <- within(processed_df, rm("end_lat2",
+                                        "end_lng2",
+                                        "station_id",
+                                        "station_name" ))
+```
+
+```{r}
+processed_df %>% 
+  
+  # filter(is.na(end_station_name) ) # 582.238
+  # filter(end_station_name == "") # 582.238 unrestored
+  # filter(is.na(start_station_name) ) # 0
+  # filter(restored == "end_station_name") # 338.344 restored
+  # filter(restored == "end_station_id") # 0
+  
+  # filter(start_station_name == "" ) # 537.630 unrestored
+  # filter(restored == "start_station_name" ) # 322.155
+  # filter(restored == "end_station_name") # 0 restored
+  # filter(start_station_name == "" & end_station_name == "" ) # 201.647
+  filter(start_station_name == "" | end_station_name == "" ) # 918.221  
+  # 101.649 end_station_name restored where start_station_name
+  
+  
+  # raw_df
+  # filter(end_station_name == "") # 920.582
+  # filter(start_station_name == "") # 859.785
+  # filter(start_station_name == "" | start_station_id == "") # 859.785
+  # filter(start_station_name == "" & start_station_id == "") # 859.785
+  # filter(start_station_name == "" & end_station_name == "") # 439.993
+  # filter(start_station_name == "" | end_station_name == "") # 1.340.374
+
+
+```
+
+##### Restoring `start_station_name` and `start_station_id`.
+
+```{r}
+processed_df[,"start_lat2"] <- round(processed_df$start_lat,geo_acc)
+processed_df[,"start_lng2"] <- round(processed_df$start_lng,geo_acc)
+
+stations_df <- 
+  rename(stations_df, all_of( c(start_lat2 = "end_lat2", 
+                                start_lng2 =  "end_lng2")) )
+
+processed_df <- 
+  left_join(processed_df, stations_df, by = c("start_lat2","start_lng2"), multiple = 'first') 
+# logging restoration
+processed_df$restored = 
+  ifelse(processed_df$start_station_name == "" & !is.na(processed_df$station_name),
+         "start_station_name",
+         ifelse(processed_df$start_station_id == "" & !is.na(processed_df$station_id),
+                "start_station_id", NA)
+  )
+
+# adding start_station_name
+processed_df$start_station_name = 
+  ifelse(processed_df$start_station_name == "" & !is.na(processed_df$station_name),
+         processed_df$station_name,
+         processed_df$start_station_name) 
+# adding start_station_id
+processed_df$start_station_id = 
+  ifelse(processed_df$start_station_id == "" & !is.na(processed_df$station_id),
+         processed_df$station_id,
+         processed_df$start_station_id) 
+
+```
+
+```{r}
+# dropping joining columns
+processed_df <- within(processed_df, rm(
+                                  "start_lat2",
+                                  "start_lng2",
+                                  "station_id",
+                                  "station_name" ))
+```
+
+Most popular stations
+
+```{r}
+processed_df %>% 
+  # group_by(end_station_name) %>%  # 1700
+  group_by(start_station_name) %>%  # 1692
+  summarise(sum=sum(n=n())) %>% 
+  arrange(desc(sum))
+```
+
+Checking for integrity `processed_df`:
+
+```{r}
+skim_without_charts(processed_df)
+```
+
+We've managed to restore station's names at 145.438 observations.\
+
+Converting cleaned data frame to tibble:
+
+```{r}
+df <- as_tibble(processed_df) 
+```
+
+We have restored 1.340.374 - 918.221 = 422.153 observations.\
+Still have no geo data on start or finish point 918.221 trips.
+
+524.685 rows missing (geo_acc = 3: 110m)\
+537.630 rows missing (geo_acc = 4: 11m)\
+537.630 rows missing (geo_acc = 5: 1.1m)
+
+Adding a trip weekday:
+
+```{r}
+df[, "weekday"] <- wday(df$started_at, label = TRUE)
+```
+
+## 4. ANALYSE
+
+### Descriptive statistics
+
+#### Assumptions and constraints
+
+Let's drop all data with `rideable_type = "docked_bike"`:
+
+```{r}
+df <- filter(df, rideable_type != "docked_bike")
+```
+
+Let's take a look at distribution of trips over data set:
+
+```{r warning=FALSE}
+df %>% 
+  ggplot(aes(x=trip_duration, y= member_casual)) +
+  geom_boxplot( outlier.colour = "red",
+                outlier.stroke = 0, 
+                outlier.alpha = 0.1,
+                varwidth = FALSE) +
+  scale_x_log10()
+
+
+```
+
+There are too many outliers that might skew overall statistics.\
+We constrain data with :
+
+-   the upper limit to `mean + 5sigma` = 237 minutes
+
+-   and the lower limit to 0.05 minutes (12 sec).
+
+```{r}
+(trip_limit <- mean(df$trip_duration) + 5* sd(df$trip_duration) )
+```
+
+It removes only 15.983 rows (0.3% of all trips).
+
+```{r}
+count(filter(df, trip_duration > trip_limit | trip_duration < 0.05))
+```
+
+```{r}
+df <- df %>% 
+  filter(trip_duration < trip_limit & trip_duration > 0.05)
+```
+
+#### Number of trips throughout a year
+
+```{r}
+df %>% 
+  group_by(member_casual) %>% 
+  summarise(ride_count = sum(n=n())) %>%
+  
+  ggplot() + 
+  geom_col(aes(y = ride_count, x = member_casual, fill = member_casual ),
+           show.legend = FALSE) +
+  geom_label(aes(y = ride_count, x = member_casual, 
+                 label = format(ride_count,big.mark=",") )
+             , vjust = 2) + 
+  labs(title = "Number of trips per year", 
+       caption = "Data for the whole year",
+       x ="", y= "") +  
+  scale_y_continuous(labels = label_comma()) +
+  theme(axis.text.y=element_blank(),
+        axis.text = element_text(size = 16)
+        ) 
+```
+
+#### Average duration of one trip
+
+```{r warning=TRUE}
+df %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(ride_mean = round(mean(trip_duration),1))  %>% 
+  
+  ggplot() +
+  geom_col(aes(y = ride_mean, x = weekday, fill = member_casual ),
+           position = "dodge", alpha = 0.8) + #, show.legend = FALSE
+  labs(title = "Average duration of one trip by day of the week (minutes)",
+       caption = "Data for the whole year",
+       x ="", y= "minutes",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma()) +
+geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
+               color = member_casual), hjust =0.8, vjust = 1.5, show.legend = FALSE)
+
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>%
+  group_by(member_casual, weekday) %>% 
+  summarise(ride_max = round(max(trip_duration),1)) 
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>%
+  group_by(member_casual, weekday) %>% 
+  summarise(mean = round(mean(trip_duration),1),
+            sd = sd(trip_duration)) %>% 
+  arrange((mean))
+```
+
+```{r}
+# df %>% 
+  # filter(rideable_type != "docked_bike") %>%
+  # group_by(member_casual, weekday, start_station_id) %>% 
+  # summarise(ride_max = round(max(as.numeric(trip_duration,"minutes")),1)) %>% 
+  # arrange((ride_max))
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>%
+  group_by(member_casual, weekday, start_station_id) %>% 
+  summarise(ride_max = round(max(trip_duration),1)) %>% 
+  arrange(desc(ride_max))
+
+
+  # group_by(member_casual, weekday) %>%
+  # summarise(ride_max = round(max(as.numeric(ride_length,"minutes")),1)) 
+```
+
+#### The maximum ride duration
+
+```{r}
+raw_df2  %>% 
+  filter(rideable_type != "docked_bike") %>%
+  # group_by(rideable_type) %>% 
+  summarise(max=as.duration(max(ended_at - started_at)))
+
+```
+
+)
+
+```{r}
+raw_df %>% 
+  filter(trip_duration > 1499 &
+           rideable_type != "docked_bike" ) %>% 
+  arrange(desc(trip_duration))
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>%
+  filter(trip_duration > 0) %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(ride_max = round(max(trip_duration),1))  %>% 
+  
+  ggplot() +
+  geom_col(aes(y = ride_max, x = weekday, fill = member_casual ),
+           position = "dodge", alpha = 0.8) + #, show.legend = FALSE
+  labs(title = "Average duration of one trip by day of the week (minutes)",
+       caption = "Data for the whole year",
+       x ="", y= "minutes",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma()) +
+geom_label(aes(y = ride_max, x = weekday, label = ride_max,
+               color = member_casual), hjust =0.8, vjust = 1.5, show.legend = FALSE)
+```
+
+Calculate the mode of day_of_week
+
+Calculate the average ride_length for members and casual riders.
+
+Calculate the average ride_length for users by day_of_week.
+
+Calculate the number of rides for users by day_of_week by adding Count
+of trip_id to Values
+
+Explore different seasons to make some initial observations.
+
+Average trip duration by day of week, month, rider
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>% 
+  filter(ride_length > 0) %>% 
+  ggplot() +
+  geom_bar(aes(x = weekday, fill = member_casual),
+           position = "dodge",alpha = .8) +
+  labs(title = "Trips by days of week",
+       caption = "",
+       x ="", y= "Count of trips",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma())
+```
+
+```{r}
+insp_plt <-   
+  df %>% 
+  filter(rideable_type != "docked_bike") %>% 
+  filter(ride_length > 0) %>% 
+  ggplot() +
+  geom_bar(aes(x = weekday, fill = member_casual),
+           position = "dodge",alpha = .8) +
+  labs(title = "Trips by days of week",
+       caption = "",
+       x ="", y= "Count of trips",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma())
+
+ggplotly(insp_plt)
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>% 
+  filter(ride_length > 0) %>% 
+  filter(started_at < ymd("2023-01-01")) %>% 
+  # group_by(month(started_at)) %>% 
+  ggplot(aes(x = month(started_at, label = TRUE), fill = member_casual)) +
+  geom_bar(position = "dodge",alpha = .8) +
+  labs(title = "Trips by month",
+       caption = "",
+       x ="", y= "Count of trips",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma())
+```
+
+```{r warning=FALSE}
+df %>% 
+  filter(rideable_type != "docked_bike") %>% 
+  filter(ride_length > 0) %>% 
+  ggplot(aes(x = as.numeric(ride_length,"minutes"), fill = member_casual)) +
+  geom_histogram(binwidth=5,position = "dodge",alpha = .8) + #
+  labs(title = "Trips by duration of ride",
+       caption = "Bin duration: 5 min",
+       x ="Minutes", y= "Count of trips",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma())+
+  xlim(0, 65)
+```
+
+```{r}
+df %>% 
+  filter(rideable_type != "docked_bike") %>% 
+  filter(ride_length < 0) %>% 
+  arrange((ride_length))
+  # nrow()
+# as.numeric(ride_length,"minutes")
+```
+
+```{r}
+df["rideable_type"] %>% 
+  unique()
+```
