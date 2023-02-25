@@ -164,7 +164,7 @@ options(dplyr.summarise.inform = FALSE)
 Take a mention on the current working folder in output of `getwd()` and
 if redefine it if needed:
 
-```{r}
+```{r message=TRUE, warning=TRUE}
 getwd()
 # uncomment and redefine it if needed (use your actual folder)
 # setwd("../Coursera/Case_study/")
@@ -199,7 +199,7 @@ temp <- list.files(path = csv_Dir, pattern = "*.csv")
 myfiles <- lapply(paste0(csv_Dir,temp), read.csv)
 ```
 
-So we have all the data we need in one place. \
+So we have all the data we need in one place.\
 We haven't performed any data manipulations so far.\
 Let's go further.
 
@@ -671,20 +671,17 @@ Checking for integrity `processed_df`:
 skim_without_charts(processed_df)
 ```
 
-We've managed to restore station's names at 145.438 observations.\
+```{r}
+nrow(filter(df, !is.na(restored) ) )
+```
+
+We've managed to restore station's names at 324.892 observations.\
 
 Converting cleaned data frame to tibble:
 
 ```{r}
 df <- as_tibble(processed_df) 
 ```
-
-We have restored 1.340.374 - 918.221 = 422.153 observations.\
-Still have no geo data on start or finish point 918.221 trips.
-
-524.685 rows missing (geo_acc = 3: 110m)\
-537.630 rows missing (geo_acc = 4: 11m)\
-537.630 rows missing (geo_acc = 5: 1.1m)
 
 Adding a trip weekday:
 
@@ -698,12 +695,6 @@ df[, "weekday"] <- wday(df$started_at, label = TRUE)
 
 #### Assumptions and constraints
 
-Let's drop all data with `rideable_type = "docked_bike"`:
-
-```{r}
-df <- filter(df, rideable_type != "docked_bike")
-```
-
 Let's take a look at distribution of trips over data set:
 
 ```{r warning=FALSE}
@@ -714,14 +705,12 @@ df %>%
                 outlier.alpha = 0.1,
                 varwidth = FALSE) +
   scale_x_log10()
-
-
 ```
 
 There are too many outliers that might skew overall statistics.\
 We constrain data with :
 
--   the upper limit to `mean + 5sigma` = 237 minutes
+-   the upper limit to `mean + 5sigma` = 141 minutes
 
 -   and the lower limit to 0.05 minutes (12 sec).
 
@@ -744,23 +733,27 @@ df <- df %>%
 
 ```{r}
 df %>% 
-  group_by(member_casual) %>% 
-  summarise(ride_count = sum(n=n())) %>%
+  group_by(member_casual, rideable_type) %>% 
+  summarise(ride_count = n()) %>%
   
   ggplot() + 
-  geom_col(aes(y = ride_count, x = member_casual, fill = member_casual ),
-           show.legend = FALSE) +
-  geom_label(aes(y = ride_count, x = member_casual, 
-                 label = format(ride_count,big.mark=",") )
-             , vjust = 2) + 
+  geom_col(aes(y = ride_count, x = member_casual, fill = rideable_type ),
+           show.legend = TRUE) + #, position=position_stack(reverse = FALSE)
+  geom_label(aes(y = ride_count, x = member_casual,  
+                 label = format(ride_count,big.mark=",") ),
+             vjust = 0, position = position_stack(vjust = 0.6) ) + 
   labs(title = "Number of trips per year", 
        caption = "Data for the whole year",
        x ="", y= "") +  
   scale_y_continuous(labels = label_comma()) +
-  theme(axis.text.y=element_blank(),
+  theme(
+    # axis.text.y=element_blank(),
         axis.text = element_text(size = 16)
         ) 
 ```
+
+Casual riders prefer classic bikes while members choose electric bikes.\
+Cyclistics members use services much more often than casual riders.
 
 #### Average duration of one trip
 
@@ -771,7 +764,7 @@ df %>%
   
   ggplot() +
   geom_col(aes(y = ride_mean, x = weekday, fill = member_casual ),
-           position = "dodge", alpha = 0.8) + #, show.legend = FALSE
+           position = "dodge") + #, show.legend = FALSE, , alpha = 0.8
   labs(title = "Average duration of one trip by day of the week (minutes)",
        caption = "Data for the whole year",
        x ="", y= "minutes",
@@ -784,14 +777,14 @@ geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>%
+  # filter(rideable_type != "docked_bike") %>%
   group_by(member_casual, weekday) %>% 
   summarise(ride_max = round(max(trip_duration),1)) 
 ```
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>%
+  # filter(rideable_type != "docked_bike") %>%
   group_by(member_casual, weekday) %>% 
   summarise(mean = round(mean(trip_duration),1),
             sd = sd(trip_duration)) %>% 
@@ -808,7 +801,7 @@ df %>%
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>%
+  # filter(rideable_type != "docked_bike") %>%
   group_by(member_casual, weekday, start_station_id) %>% 
   summarise(ride_max = round(max(trip_duration),1)) %>% 
   arrange(desc(ride_max))
@@ -821,14 +814,25 @@ df %>%
 #### The maximum ride duration
 
 ```{r}
-raw_df2  %>% 
+raw_df  %>% 
   filter(rideable_type != "docked_bike") %>%
-  # group_by(rideable_type) %>% 
-  summarise(max=as.duration(max(ended_at - started_at)))
-
+  group_by(rideable_type) %>% 
+  summarise(max=as.duration(max(ended_at - started_at))) %>% 
+  
+  ggplot() + 
+  geom_col(aes(y = max, x = rideable_type, fill = rideable_type ),
+           show.legend = FALSE) +
+  geom_label(aes(y = max, x = rideable_type, 
+                 label = format(max,big.mark=",") )
+             , vjust = 2) + 
+  labs(title = "Number of trips per year", 
+       caption = "Data for the whole year",
+       x ="", y= "") +  
+  scale_y_continuous(labels = label_comma()) +
+  theme(axis.text.y=element_blank(),
+        axis.text = element_text(size = 16)
+        ) 
 ```
-
-)
 
 ```{r}
 raw_df %>% 
