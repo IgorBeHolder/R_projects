@@ -1,5 +1,5 @@
 ---
-title: "Coursera Caapstone Project. Cyclistic bike-share. R Notebook"
+title: "Coursera Capstone project for Google Data Analytics Professional Certificate. Cyclistic bike-share. R Notebook"
 author: "Igr Sorochan"
 date: "`r Sys.Date()`"
 output:
@@ -19,11 +19,9 @@ editor_options:
 ```
 
 |                                                                                                                                                                |     |                                                                                                                                                                                                                                  |
-|----------------------|------------------|--------------------------------|
+|-------------------------|------------------|-----------------------------|
 | ![](https://images.ctfassets.net/00atxywtfxvd/2MlqAOzmHjSPtssv6HlNox/1cb35b40775835a5f574ebc5509907a1/coursera-wordmark-blue.svg){width="100" height="14"}     |     | ![](https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/http://coursera-university-assets.s3.amazonaws.com/fa/79e521abf14610b4fec9d677901916/0.png?auto=format%252Ccompress&dpr=2&w=&h=45){width="90" height="29"} |
 | Coursera is the global online learning platform that offers anyone, anywhere access to online courses and degrees from world-class universities and companies. |     | Google is an American multinational corporation specializing in internet-related services and products.                                                                                                                          |
-
-### Capstone project for Google Data Analytics Professional Certificate
 
 # Case Study 1 Case Study: How Does a Bike-Share Navigate Speedy Success?
 
@@ -121,25 +119,33 @@ Documentation of any cleaning or manipulation of data
 
 #### Data location
 
-We'll use Cyclistic's historical trip data to analyze and identify
-trends. The data has been made available by Motivate International Inc.
-under [this license.](https://www.divvybikes.com/data-license-agreement)
+Lyft Bikes and Scooters, LLC ("Bikeshare") operates the City of
+Chicago's ("City") Divvy bicycle sharing service. Bikeshare and the City
+are committed to supporting bicycling as an alternative transportation
+option. As part of that commitment, the City permits Bikeshare to make
+certain Divvy system data owned by the City ("Data") available to the
+publicData organization.
 
-#### Data organization
-
-The data is stored in zip files
-[here](https://divvy-tripdata.s3.amazonaws.com/index.html).\
-Every zip file includes one month data.\
-The time scope of our analysis is at least 12 previous months.\
-We have already downloaded zip files and put them into `Divvy-tripdata`
-folder in our project working directory.\
-Csv files we plan to unzip into `Divvy-tripdata/csv` folder.
+We'll use that Data in Case study as Cyclistic's historical trip data.\
+The data has been made available by Motivate International Inc. under
+[this license.](https://www.divvybikes.com/data-license-agreement) It is
+a **First-party data.**
 
 #### Data credibility and data bias
 
+The Data itself is a First-party data and it is credible and has no
+evidence of bias of any kind.
+
 #### Data ethics
 
-\
+There is no any personal information that we can associate with real
+customers.\
+We accept all limitations on Data usage noted in "Prohibited conduct" in
+[**Data License
+Agreement**.](https://www.divvybikes.com/data-license-agreement)
+
+#### Data tools
+
 At first glance, the overall dataset would be **Large** enough to
 process and will force any available spreadsheet software to struggle,
 so our team decided to use R to handle it.\
@@ -164,7 +170,7 @@ options(dplyr.summarise.inform = FALSE)
 Take a mention on the current working folder in output of `getwd()` and
 if redefine it if needed:
 
-```{r message=TRUE, warning=TRUE}
+```{r}
 getwd()
 # uncomment and redefine it if needed (use your actual folder)
 # setwd("../Coursera/Case_study/")
@@ -205,7 +211,9 @@ Let's go further.
 
 ## 3. PROCESS
 
-### **Do the data frames have the same columns & types?**
+### Data transformations
+
+#### **Do the data frames have the same columns & types?**
 
 Let's check it out:
 
@@ -223,7 +231,7 @@ janitor::compare_df_cols(myfiles, return = "mismatch")
 
 Returned 0 rows -\> all data frames are ready to bind.
 
-### Finally forming united table.
+#### Finally forming united table.
 
 Binding data frames by row, making a longer result (few seconds to
 execute, don't panic):
@@ -238,7 +246,7 @@ Let's look in:
 head(raw_df)
 ```
 
-### We need to convert date related columns to appropriate type:
+#### We need to convert date related columns to appropriate type:
 
 ```{r}
 raw_df$started_at = ymd_hms(raw_df$started_at) 
@@ -275,7 +283,7 @@ skim_without_charts(raw_df)
     relationship between two tables by checking the relationship between
     the foreign key and primary key in those tables.
 
-Data set consists of 5.858.018 observations with 13 characteristics
+Data set consists of 5.858.018 observations with 14 characteristics
 (columns).\
 Time scope of all trips is relevant to the scope of business problem.
 
@@ -367,7 +375,7 @@ The data is not clean:
 3.  1.340.374 (23 % of all trips) of data concerning station's names is
     empty. 99,5 % among them are electric bikes.
 
-4.  Some `started_at` is greater than `ended_at` It means negative
+4.  Some `started_at` is greater than `ended_at`. It means negative
     `trip_duration` .
 
 5.  Standard deviation of `trip_duration` is unreasonably high: ( 175
@@ -390,8 +398,8 @@ names:
 
 #### Dropping irrelevant data
 
-Let's take a look on "strange" observations where\
-`trip_duration > 1499 & rideable_type != "docked_bike"`
+Let's take a look on "strange" observations\
+where `trip_duration > 1499 & rideable_type != "docked_bike"`
 
 ```{r}
 raw_df %>% 
@@ -410,14 +418,13 @@ We'll drop all observations with:
 
 3.  `end_station_name` is empty
 
+We name it `trip_df` :
+
 ```{r}
-raw_df2 <- raw_df %>% 
+trip_df <- raw_df %>% 
   filter(rideable_type != "docked_bike" ) %>% 
   filter(trip_duration > 0 &
            trip_duration < 1499 ) 
-
-# &
-#            end_station_name != ""
 ```
 
 ### Logic behind the following restoration process:
@@ -439,7 +446,7 @@ accuracy).
 geo_acc <- 4
 
 # parcing end stations
-stations_df <- raw_df2 %>% 
+stations_df <- trip_df %>% 
     filter(end_station_name != "" & 
              (end_lat != 0 | !is.na(end_lat) ) ) %>% 
   group_by(end_station_name) %>% 
@@ -455,7 +462,7 @@ stations_df[,"end_lng2"] = round(stations_df$lngit,geo_acc)
 
 # adding station IDs
 stations_df <-
-  left_join(stations_df, raw_df2, by = c("end_station_name"), multiple = "first") %>% 
+  left_join(stations_df, trip_df, by = c("end_station_name"), multiple = "first") %>% 
   select("end_station_id",
          "end_station_name",
          "latit",
@@ -470,7 +477,7 @@ stations_df <-
 
 # parcing start stations
 # stations_df2 - start_station data frame
-stations_df2 <- raw_df2 %>% 
+stations_df2 <- trip_df %>% 
     filter(start_station_name != "" ) %>% 
   group_by(start_station_name) %>% 
   # all columns with '2' at the end will serve later as joining instances 
@@ -486,7 +493,7 @@ stations_df2[,"end_lng2"] = round(stations_df2$lngit,geo_acc)
 
 # adding station IDs
 stations_df2 <-
-  left_join(stations_df2, raw_df2, by = c("start_station_name"), multiple = "first") %>% 
+  left_join(stations_df2, trip_df, by = c("start_station_name"), multiple = "first") %>% 
   select("start_station_id",
          "start_station_name",
          "latit",
@@ -535,7 +542,7 @@ ggplotly(insp_plt)
 
 ```{r}
 # copy of raw_data to keep the source data untouched
-processed_df <- raw_df2
+processed_df <- trip_df
 
 # service columns with rounded geo data
 processed_df[,"end_lat2"] <- round(processed_df$end_lat,geo_acc)
@@ -652,7 +659,11 @@ processed_df <- within(processed_df, rm(
                                   "start_lat2",
                                   "start_lng2",
                                   "station_id",
-                                  "station_name" ))
+                                  "station_name",
+                                  "latit.x",
+                                  "lngit.x",
+                                  "latit.y",
+                                  "lngit.y"))
 ```
 
 Most popular stations
@@ -761,7 +772,7 @@ Cyclistics members use services much more often than casual riders.
 df %>% 
   group_by(member_casual, weekday) %>% 
   summarise(ride_mean = round(mean(trip_duration),1))  %>% 
-  
+  # summarise(ride_mean = round(mean(trip_duration),1))  %>%   
   ggplot() +
   geom_col(aes(y = ride_mean, x = weekday, fill = member_casual ),
            position = "dodge") + #, show.legend = FALSE, , alpha = 0.8
@@ -774,6 +785,8 @@ geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
                color = member_casual), hjust =0.8, vjust = 1.5, show.legend = FALSE)
 
 ```
+
+Average duration of casual riders is significantly higher.
 
 ```{r}
 df %>% 
@@ -835,13 +848,6 @@ raw_df  %>%
 ```
 
 ```{r}
-raw_df %>% 
-  filter(trip_duration > 1499 &
-           rideable_type != "docked_bike" ) %>% 
-  arrange(desc(trip_duration))
-```
-
-```{r}
 df %>% 
   filter(rideable_type != "docked_bike") %>%
   filter(trip_duration > 0) %>% 
@@ -860,7 +866,60 @@ geom_label(aes(y = ride_max, x = weekday, label = ride_max,
                color = member_casual), hjust =0.8, vjust = 1.5, show.legend = FALSE)
 ```
 
-Calculate the mode of day_of_week
+#### The mode of day of week
+
+```{r}
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+num_weeks <- as.numeric(max(df$ended_at) - min(df$ended_at),"weeks") 
+df %>% 
+  group_by(member_casual, weekday) %>%
+  summarise(mode = Mode(weekday), 
+            count = n() / num_weeks ) %>% 
+  # arrange(desc(count))
+  
+  ggplot() +
+  geom_col(aes(y = count, x = weekday, fill = member_casual ),
+           position = "dodge") + #, show.legend = FALSE, , alpha = 0.8
+  labs(title = "Number of trips by day of the week",
+       caption = "Data for the whole year",
+       x ="", y= "Count",
+       fill='Type of rider') +
+  scale_y_continuous(labels = label_comma()) +
+  geom_label(aes(x = weekday, y = count,  label = round(count), color = member_casual), 
+      hjust =0.5, vjust = 1.7, show.legend = FALSE, size = 3,
+      position = position_dodge(width = 1)) 
+```
+
+| Sample        | The mode | Number of trips         |
+|---------------|----------|-------------------------|
+| Member riders | Thursday | 9806 (8094 at Saturday) |
+| Casual riders | Saturday | 7714                    |
+| Population    | Saturday | 15808                   |
+
+: The mode of day of week
+
+The mode of day of week in population is Saturday.
+
+```{r}
+
+num_weeks <- as.numeric(max(df$ended_at) - min(df$ended_at),"weeks") 
+df %>% 
+  group_by( weekday) %>%
+  summarise(mode = Mode(weekday), 
+            count = n() / num_weeks ) %>% 
+  arrange(desc(count))
+```
+
+```{r}
+df %>% 
+  group_by(weekday, member_casual) %>%
+  summarise(mode = n())  %>% 
+  arrange(desc(mode))
+```
 
 Calculate the average ride_length for members and casual riders.
 
