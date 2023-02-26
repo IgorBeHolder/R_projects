@@ -139,7 +139,7 @@ evidence of bias of any kind.
 #### Data ethics
 
 There is no any personal information that we can associate with real
-customers.\
+customers. Each trip is anonymized.\
 We accept all limitations on Data usage noted in "Prohibited conduct" in
 [**Data License
 Agreement**.](https://www.divvybikes.com/data-license-agreement)
@@ -319,6 +319,8 @@ raw_df %>%
   nrow()
 ```
 
+\
+
 ### Data issues
 
 Most of the lost of geo data fell on electric bikes:
@@ -398,31 +400,60 @@ names:
 
 #### Dropping irrelevant data
 
+The data has to be processed to remove:
+
+-    trips that are taken by staff as they service and inspect the
+    system
+
+-   any trips that were below 60 seconds in length (potentially false
+    starts or users trying to re-dock a bike to ensure it was secure).
+
 Let's take a look on "strange" observations\
 where `trip_duration > 1499 & rideable_type != "docked_bike"`
 
 ```{r}
 raw_df %>% 
-  filter(trip_duration > 1499 &
+  filter(
+    trip_duration > 0 &
            rideable_type != "docked_bike" ) %>% 
-  select("trip_duration") %>% 
-  arrange(trip_duration)
+  filter(end_station_name !="") %>% 
+  # select("trip_duration") %>% 
+  arrange(desc(trip_duration))
 ```
 
-We'll drop all observations with:
+```{r message=FALSE, warning=FALSE}
+raw_df %>% 
+  # filter(start_station_name == "" | end_station_name == ""  ) %>% 
+  filter(rideable_type != "docked_bike") %>%
+  filter(trip_duration > 0) %>% 
+  # nrow()
+  arrange(trip_duration) %>% 
 
-1.  `rideable_type = "docked_bike"` to exclude service observations.
+  ggplot() +
 
-2.  `trip_duration` \> 1499 minutes ( \> 8 sigma) or `trip_duration` \<
-    0 and
+  geom_density(aes(x=trip_duration)) +
+  scale_y_log10()
+```
 
-3.  `end_station_name` is empty
+The surge at mark 25h(1500 min) might be a service notation, e.g. bikes
+that had been left out of parking stations, stolen bikes or defected.
+
+Finally, we'll consider trip a **valid** if it meets following
+conditions:
+
+1.  `rideable_type != "docked_bike"` to exclude service observations.
+
+2.  `trip_duration` \> 1 minute (false starts and re-docking).
+
+3.  `trip_duration` \< 1499 minutes ( mean + 8 std dev)
+
+4.  `end_station_name` is not empty
 
 We name it `trip_df` :
 
 ```{r}
 trip_df <- raw_df %>% 
-  filter(rideable_type != "docked_bike" ) %>% 
+  filter(rideable_type != "docked_bike" & !is.na(end_lat)) %>% 
   filter(trip_duration > 0 &
            trip_duration < 1499 ) 
 ```
@@ -542,58 +573,106 @@ ggplotly(insp_plt)
 
 ```{r}
 # copy of raw_data to keep the source data untouched
-processed_df <- trip_df
+trip_df <- trip_df
 
 # service columns with rounded geo data
-processed_df[,"end_lat2"] <- round(processed_df$end_lat,geo_acc)
-processed_df[,"end_lng2"] <- round(processed_df$end_lng,geo_acc)
-processed_df[,"restored"] <- NA
-# head(processed_df)
+trip_df[,"end_lat2"] <- round(trip_df$end_lat,geo_acc)
+trip_df[,"end_lng2"] <- round(trip_df$end_lng,geo_acc)
+trip_df[,"restored"] <- NA
+# head(trip_df)
 ```
 
 ##### Restoring `end_station_name` and `end_station_id`.
 
 ```{r}
-processed_df <- 
-  left_join(processed_df, stations_df, by = c("end_lat2","end_lng2"), multiple = 'first') 
+trip_df <- 
+  left_join(trip_df, stations_df, by = c("end_lat2","end_lng2"), multiple = 'first') 
 
 # logging restoration
-processed_df$restored = 
-  ifelse(processed_df$end_station_name == "" & !is.na(processed_df$station_name),
+trip_df$restored = 
+  ifelse(trip_df$end_station_name == "" & !is.na(trip_df$station_name),
          "end_station_name",
-         ifelse(processed_df$end_station_id == "" & !is.na(processed_df$station_id),
+         ifelse(trip_df$end_station_id == "" & !is.na(trip_df$station_id),
                 "end_station_id", NA)
   )
 # adding end_station_name
-processed_df$end_station_name = 
-  ifelse(processed_df$end_station_name == ""& !is.na(processed_df$station_name),
-         processed_df$station_name,
-         processed_df$end_station_name) 
+trip_df$end_station_name = 
+  ifelse(trip_df$end_station_name == ""& !is.na(trip_df$station_name),
+         trip_df$station_name,
+         trip_df$end_station_name) 
 # adding end_station_id
-processed_df$end_station_id = 
-  ifelse(processed_df$end_station_id == ""& !is.na(processed_df$station_id),
-         processed_df$station_id,
-         processed_df$end_station_id) 
+trip_df$end_station_id = 
+  ifelse(trip_df$end_station_id == ""& !is.na(trip_df$station_id),
+         trip_df$station_id,
+         trip_df$end_station_id) 
 ```
 
 ```{r}
-# nrow(processed_df)
+# nrow(trip_df)
 ```
 
 ```{r}
-# colnames(processed_df)
+# colnames(trip_df)
 ```
 
 ```{r}
 # dropping service joining columns
-processed_df <- within(processed_df, rm("end_lat2",
+trip_df <- within(trip_df, rm("end_lat2",
                                         "end_lng2",
                                         "station_id",
                                         "station_name" ))
 ```
 
+##### Restoring `start_station_name` and `start_station_id`.
+
 ```{r}
-processed_df %>% 
+trip_df[,"start_lat2"] <- round(trip_df$start_lat,geo_acc)
+trip_df[,"start_lng2"] <- round(trip_df$start_lng,geo_acc)
+
+stations_df <- 
+  rename(stations_df, all_of( c(start_lat2 = "end_lat2", 
+                                start_lng2 =  "end_lng2")) )
+
+trip_df <- 
+  left_join(trip_df, stations_df, by = c("start_lat2","start_lng2"), multiple = 'first') 
+# logging restoration
+trip_df$restored = 
+  ifelse(trip_df$start_station_name == "" & !is.na(trip_df$station_name),
+         "start_station_name",
+         ifelse(trip_df$start_station_id == "" & !is.na(trip_df$station_id),
+                "start_station_id", NA)
+  )
+
+# adding start_station_name
+trip_df$start_station_name = 
+  ifelse(trip_df$start_station_name == "" & !is.na(trip_df$station_name),
+         trip_df$station_name,
+         trip_df$start_station_name) 
+# adding start_station_id
+trip_df$start_station_id = 
+  ifelse(trip_df$start_station_id == "" & !is.na(trip_df$station_id),
+         trip_df$station_id,
+         trip_df$start_station_id) 
+
+```
+
+```{r}
+# dropping joining columns
+trip_df <- within(trip_df, rm(
+                                  "start_lat2",
+                                  "start_lng2",
+                                  "station_id",
+                                  "station_name",
+                                  "latit.x",
+                                  "lngit.x",
+                                  "latit.y",
+                                  "lngit.y"))
+```
+
+Most popular stations
+
+```{r}
+trip_df %>% 
   
   # filter(is.na(end_station_name) ) # 582.238
   # filter(end_station_name == "") # 582.238 unrestored
@@ -616,74 +695,16 @@ processed_df %>%
   # filter(start_station_name == "" & start_station_id == "") # 859.785
   # filter(start_station_name == "" & end_station_name == "") # 439.993
   # filter(start_station_name == "" | end_station_name == "") # 1.340.374
-
-
 ```
 
-##### Restoring `start_station_name` and `start_station_id`.
+Checking for integrity `trip_df`:
 
 ```{r}
-processed_df[,"start_lat2"] <- round(processed_df$start_lat,geo_acc)
-processed_df[,"start_lng2"] <- round(processed_df$start_lng,geo_acc)
-
-stations_df <- 
-  rename(stations_df, all_of( c(start_lat2 = "end_lat2", 
-                                start_lng2 =  "end_lng2")) )
-
-processed_df <- 
-  left_join(processed_df, stations_df, by = c("start_lat2","start_lng2"), multiple = 'first') 
-# logging restoration
-processed_df$restored = 
-  ifelse(processed_df$start_station_name == "" & !is.na(processed_df$station_name),
-         "start_station_name",
-         ifelse(processed_df$start_station_id == "" & !is.na(processed_df$station_id),
-                "start_station_id", NA)
-  )
-
-# adding start_station_name
-processed_df$start_station_name = 
-  ifelse(processed_df$start_station_name == "" & !is.na(processed_df$station_name),
-         processed_df$station_name,
-         processed_df$start_station_name) 
-# adding start_station_id
-processed_df$start_station_id = 
-  ifelse(processed_df$start_station_id == "" & !is.na(processed_df$station_id),
-         processed_df$station_id,
-         processed_df$start_station_id) 
-
+skim_without_charts(trip_df)
 ```
 
 ```{r}
-# dropping joining columns
-processed_df <- within(processed_df, rm(
-                                  "start_lat2",
-                                  "start_lng2",
-                                  "station_id",
-                                  "station_name",
-                                  "latit.x",
-                                  "lngit.x",
-                                  "latit.y",
-                                  "lngit.y"))
-```
-
-Most popular stations
-
-```{r}
-processed_df %>% 
-  # group_by(end_station_name) %>%  # 1700
-  group_by(start_station_name) %>%  # 1692
-  summarise(sum=sum(n=n())) %>% 
-  arrange(desc(sum))
-```
-
-Checking for integrity `processed_df`:
-
-```{r}
-skim_without_charts(processed_df)
-```
-
-```{r}
-nrow(filter(df, !is.na(restored) ) )
+nrow(filter(trip_df, !is.na(restored) ) )
 ```
 
 We've managed to restore station's names at 324.892 observations.\
@@ -691,18 +712,16 @@ We've managed to restore station's names at 324.892 observations.\
 Converting cleaned data frame to tibble:
 
 ```{r}
-df <- as_tibble(processed_df) 
+df <- as_tibble(trip_df) 
 ```
 
-Adding a trip weekday:
+Adding a trip the day of the week :
 
 ```{r}
 df[, "weekday"] <- wday(df$started_at, label = TRUE)
 ```
 
 ## 4. ANALYSE
-
-### Descriptive statistics
 
 #### Assumptions and constraints
 
@@ -729,16 +748,19 @@ We constrain data with :
 (trip_limit <- mean(df$trip_duration) + 5* sd(df$trip_duration) )
 ```
 
-It removes only 15.983 rows (0.3% of all trips).
+It removes only 24.651 rows (0.4 % of all trips). So our conclusions
+will be based on 99.6% of data.
 
 ```{r}
 count(filter(df, trip_duration > trip_limit | trip_duration < 0.05))
 ```
 
 ```{r}
-df <- df %>% 
-  filter(trip_duration < trip_limit & trip_duration > 0.05)
+# df <- df %>% 
+#   filter(trip_duration < trip_limit & trip_duration > 0.05)
 ```
+
+### Descriptive statistics
 
 #### Number of trips throughout a year
 
@@ -748,11 +770,11 @@ df %>%
   summarise(ride_count = n()) %>%
   
   ggplot() + 
-  geom_col(aes(y = ride_count, x = member_casual, fill = rideable_type ),
-           show.legend = TRUE) + #, position=position_stack(reverse = FALSE)
-  geom_label(aes(y = ride_count, x = member_casual,  
-                 label = format(ride_count,big.mark=",") ),
-             vjust = 0, position = position_stack(vjust = 0.6) ) + 
+  geom_col(aes(x = member_casual, y = ride_count,  fill = rideable_type ),
+           show.legend = TRUE) + 
+  geom_label(aes(x = member_casual, y = ride_count,  
+                 label = format(ride_count,big.mark=",") , color = rideable_type),
+             position = position_stack(vjust = 0.6) , show.legend = FALSE) + 
   labs(title = "Number of trips per year", 
        caption = "Data for the whole year",
        x ="", y= "") +  
@@ -763,8 +785,22 @@ df %>%
         ) 
 ```
 
-Casual riders prefer classic bikes while members choose electric bikes.\
-Cyclistics members use services much more often than casual riders.
+Casual riders prefer electric bikes (+42.8% over classic bikes) \
+while members more often choose classic bikes.\
+Members use Cyclistics's services much more often than casual riders (+
+61 %).
+
+|                | casual riders       | members            | total     |
+|----------------|---------------------|--------------------|-----------|
+| classic bikes  | 890.944             | 1.779.640          | 2.670.584 |
+| electric bikes | 1.272.693 (+42.8 %) | 1.703.416 (-4.3 %) | 2.976.109 |
+| total bikes    | 2.163.137           | 3.483.056          | 5.646.693 |
+
+```{r}
+df %>% 
+  group_by(rideable_type, member_casual) %>%
+  summarise(ride_count = n()) 
+```
 
 #### Average duration of one trip
 
@@ -786,7 +822,13 @@ geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
 
 ```
 
-Average duration of casual riders is significantly higher.
+```{r}
+df %>% 
+  group_by(member_casual) %>% 
+  summarise(ride_mean = round(mean(trip_duration),1)) 
+```
+
+Average duration of casual riders is significantly higher (+ 51 %).
 
 ```{r}
 df %>% 
@@ -838,13 +880,21 @@ raw_df  %>%
   geom_label(aes(y = max, x = rideable_type, 
                  label = format(max,big.mark=",") )
              , vjust = 2) + 
-  labs(title = "Number of trips per year", 
+  labs(title = "The maximum ride duration", 
        caption = "Data for the whole year",
        x ="", y= "") +  
   scale_y_continuous(labels = label_comma()) +
   theme(axis.text.y=element_blank(),
         axis.text = element_text(size = 16)
         ) 
+```
+
+```{r}
+raw_df %>% 
+  filter(rideable_type !="docked_bike") %>% 
+  filter( !is.na(end_lat) ) %>% 
+  # filter(trip_duration > as.duration(93596/60)) %>% 
+  arrange(desc(trip_duration))
 ```
 
 ```{r}
@@ -934,8 +984,6 @@ Average trip duration by day of week, month, rider
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>% 
-  filter(ride_length > 0) %>% 
   ggplot() +
   geom_bar(aes(x = weekday, fill = member_casual),
            position = "dodge",alpha = .8) +
@@ -949,8 +997,6 @@ df %>%
 ```{r}
 insp_plt <-   
   df %>% 
-  filter(rideable_type != "docked_bike") %>% 
-  filter(ride_length > 0) %>% 
   ggplot() +
   geom_bar(aes(x = weekday, fill = member_casual),
            position = "dodge",alpha = .8) +
@@ -965,8 +1011,6 @@ ggplotly(insp_plt)
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>% 
-  filter(ride_length > 0) %>% 
   filter(started_at < ymd("2023-01-01")) %>% 
   # group_by(month(started_at)) %>% 
   ggplot(aes(x = month(started_at, label = TRUE), fill = member_casual)) +
@@ -978,11 +1022,9 @@ df %>%
   scale_y_continuous(labels = label_comma())
 ```
 
-```{r warning=FALSE}
+```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>% 
-  filter(ride_length > 0) %>% 
-  ggplot(aes(x = as.numeric(ride_length,"minutes"), fill = member_casual)) +
+  ggplot(aes(x = trip_duration, fill = member_casual)) +
   geom_histogram(binwidth=5,position = "dodge",alpha = .8) + #
   labs(title = "Trips by duration of ride",
        caption = "Bin duration: 5 min",
@@ -994,9 +1036,7 @@ df %>%
 
 ```{r}
 df %>% 
-  filter(rideable_type != "docked_bike") %>% 
-  filter(ride_length < 0) %>% 
-  arrange((ride_length))
+  arrange(desc(trip_duration))
   # nrow()
 # as.numeric(ride_length,"minutes")
 ```
