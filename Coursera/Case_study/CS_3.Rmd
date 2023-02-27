@@ -972,25 +972,26 @@ num_weeks <- as.numeric(max(df$ended_at) - min(df$ended_at),"weeks")
 df %>% 
   mutate(Month=  month(started_at, label = TRUE)) %>% 
 
-  crosstable(c(weekday), by=c(member_casual, Month),  total="both", showNA="no", 
+  crosstable(c("   " =Month), by=c(" "=member_casual,"  "=weekday),  total="both", showNA="no", 
         percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
-
-  as_flextable(keep_id=FALSE) 
-
+  as_flextable(compact=TRUE, keep_id=FALSE) %>% 
+  set_caption(paste("Cross table. Number of trips by Month and by day of the week", report_caption))
 ```
 
-+----------------+----------------+----------------+------------------------+
-| Sample         | The mode       | Number of      | Anti-mode (the least   |
-|                |                | trips          | frequent score)        |
-+================+================+================+========================+
-| Member riders  | Thursday\      | 9,584 (7,901   | Sunday - 6,955         |
-|                | (Tue-Thu       | at Saturday)   |                        |
-|                | roughly equal) |                |                        |
-+----------------+----------------+----------------+------------------------+
-| Casual riders  | Saturday       | 7,542          | Tuesday- 4,362         |
-+----------------+----------------+----------------+------------------------+
-| Population     | Saturday       | 15,443         | Monday- 13,071         |
-+----------------+----------------+----------------+------------------------+
++----------------+----------------+------------------------+
+| Rider          | The mode       | Anti-mode\             |
+|                |                | (the least frequent    |
+|                |                | score)                 |
++================+================+========================+
+| Member riders  | Thursday\      | Sunday                 |
+|                | (Tue, Wed,     |                        |
+|                | Thu - roughly  |                        |
+|                | equal)         |                        |
++----------------+----------------+------------------------+
+| Casual riders  | Saturday       | Monday - Tuesday       |
++----------------+----------------+------------------------+
+| Population     | Saturday       | Monday                 |
++----------------+----------------+------------------------+
 
 Insights:
 
@@ -1039,7 +1040,7 @@ df %>%
 
   ggplot(aes(x = Month, y= count, fill = member_casual)) +
   geom_col(position = "stack") +
-  labs(title = "Number of trips per month",
+  labs(title = "Stacked Number of trips per month",
        caption = "2022 calendar year data",
        x ="", y= "Stacked count",
        fill='Type of rider') +
@@ -1063,7 +1064,8 @@ Insights:
 
 ```{r Monthly trip duration}
 
-insp_plt <-
+# plotly interactive doesn't work with github output
+# insp_plt <-
 df %>% 
   filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year
   group_by(member_casual, Month=  month(started_at, label = TRUE)) %>%
@@ -1078,7 +1080,7 @@ df %>%
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma())
 
-ggplotly(insp_plt)
+# ggplotly(insp_plt)
 ```
 
 #### Number of trips by duration
@@ -1107,10 +1109,10 @@ df %>%
   mutate(Month=  month(started_at, label = TRUE), 
          Ride_duration = round(trip_duration)) %>% 
 
-  crosstable(Ride_duration, by=c(member_casual ), funs = c(mean, median), total="both", showNA="no", 
+  crosstable(c(" "=Ride_duration), by=c("Rider" = member_casual ), funs = c(mean, median), total="both", showNA="no", 
         percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
-
-  as_flextable(keep_id=FALSE) 
+  as_flextable(compact=TRUE, keep_id=FALSE) %>% 
+  set_caption(paste("Mean and median trip durations.", report_caption))
 ```
 
 ### Conclusions
