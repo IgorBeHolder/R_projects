@@ -1,30 +1,31 @@
 ---
 title: "Coursera Capstone project"
 author: "Igr Sorochan"
-date: "`r Sys.Date()`"
+date: '`r Sys.Date()`'
 output:
-  github_document:
-    toc: yes
-    toc_depth: 4
-  chunk_output_type: inline
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
   html_document:
     toc: yes
     toc_depth: 4
     df_print: paged
-    code_folding: hide 
+    code_folding: hide
+  chunk_output_type: inline
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  github_document:
+    toc: yes
+    toc_depth: 4
+always_allow_html: yes
 ---
 
 +----------------------+------------+-----------------------------------------+
-| ![](https://c        |            | ![](https://d3njjcbhbojbot.cloudfron    |
-| ompanieslogo.com/img |            | t.net/api/utilities/v1/imageproxy/http: |
-| /orig/COUR_BIG-e3284 |            | //coursera-university-assets.s3.amazona |
-| ace.png){width="118" |            | ws.com/fa/79e521abf14610b4fec9d67790191 |
-| height="17"}         |            | 6/0.png?auto=format%252Ccompress&dpr=2& |
-|                      |            | w=&h=45){style="vertical-align: middle" |
-|                      |            | width="90" height="29"}                 |
+| ![](                 |            | ![](){style="vertical-align: middle"}![ |
+| )![](https://seekvec |            | ](https://assets.stickpng.com/images/58 |
+| torlogo.com/wp-conte |            | 0b57fcd9996e24bc43c51f.png){width="89"} |
+| nt/uploads/2022/02/c |            |                                         |
+| oursera-vector-logo- |            |                                         |
+| 2022.png){width="90" |            |                                         |
+| height="49"}         |            |                                         |
 +----------------------+------------+-----------------------------------------+
 | Coursera is the      |            | Google is an American multinational     |
 | global online        |            | corporation specializing in             |
@@ -144,7 +145,9 @@ The data has been made available by Motivate International Inc. under [this
 license.](https://www.divvybikes.com/data-license-agreement) It is a
 **First-party data.**
 
-We'll use that Data in Case study as Cyclistic's historical trip data.\
+We'll use that Data in Case study as Cyclistic's historical trip data.
+
+Data is reliable, original, comprehensive, current and cited.\
 
 ### Data credibility and data bias
 
@@ -272,7 +275,7 @@ raw_df <- dplyr::bind_rows(myfiles)
 Let's look in:
 
 ```{r head}
-summary(raw_df)
+head(raw_df,5)
 ```
 
 #### We need to convert date related columns to appropriate type:
