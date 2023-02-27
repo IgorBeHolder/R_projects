@@ -149,6 +149,7 @@ library(ggplot2)
 library(plotly)
 library(scales)
 library(skimr)
+library(crosstable)
 library(sf)
 options(dplyr.summarise.inform = FALSE)
 options(max.print=100)
@@ -162,10 +163,14 @@ getwd()
 # setwd("../Coursera/Case_study/")
 ```
 
-Defining the directory where all original zip files will be placed:
+Original data lives [here](https://divvy-tripdata.s3.amazonaws.com/index.html).
+We've selected appropriate .zip files from Jan2022 till Jan2023 (13 months of data were available as of the date of this report) and store them locally at `zip_dir` folder.\
+
+Defining the directory where all original zip files are placed and defining `report_caption` :
 
 ```{r}
 zip_dir<- paste0(getwd(),"/Divvy_tripdata/") 
+report_caption <- "Jan 2022 - Jan 2023"
 ```
 
 Defining the directory csv files to extract:
@@ -353,7 +358,7 @@ raw_df %>%
   geom_label(aes(y = sum, x = rideable_type, label = sum,
                color = rideable_type), hjust =0.8, vjust = 0, show.legend = FALSE)+
   labs(title = "Trips with missing station's names by type of bike",
-       caption = "Data for the whole year",
+       caption = report_caption,
        x ="", y= "",
        fill='Type of rider')+
   theme(axis.text.y=element_blank(),
@@ -707,6 +712,7 @@ count(filter(df, trip_duration > trip_limit))
 
 ```{r Number of trips throughout a year}
 df %>% 
+  filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year  
   group_by(member_casual, rideable_type) %>% 
   summarise(ride_count = n()) %>%
   
@@ -717,13 +723,22 @@ df %>%
                  label = format(ride_count,big.mark=",") , color = rideable_type),
              position = position_stack(vjust = 0.6) , show.legend = FALSE) + 
   labs(title = "Number of trips per year", 
-       caption = "Data for the whole year",
+       caption = "2022 calendar year data",
        x ="", y= "") +  
   scale_y_continuous(labels = label_comma()) +
   theme(
     # axis.text.y=element_blank(),
         axis.text = element_text(size = 16)
         ) 
+
+```
+
+```{r warning=FALSE}
+df %>% 
+  filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year 
+  crosstable(c(rideable_type), by=member_casual, total="both", showNA="no", 
+        percent_digits=0, percent_pattern="{n} ({p_col})") %>% # , percent_pattern="{n} ({p_col}/{p_row})"
+  as_flextable(keep_id=FALSE)
 ```
 
 **Insights:**
@@ -733,22 +748,6 @@ df %>%
 -   while Cyclistic's **members** choose e-bikes and classic bikes roughly equally.
 
 -   **Members** use Cyclistics's services **much more often** than casual riders (+ 60 %).
-
-+----------------+---------------------+--------------------+---------------+
-|                | casual riders       | members            | total         |
-+================+=====================+====================+===============+
-| classic bikes  | 889.658             | 1.758.197          | 2.647.855     |
-+----------------+---------------------+--------------------+---------------+
-| electric bikes | 1.242.534 (+42.8 %) | 1.658.057 (-4.3 %) | 2.900.591     |
-+----------------+---------------------+--------------------+---------------+
-| total bikes    | 2.132.193           | 3.416.254          | 5.548.446     |
-+----------------+---------------------+--------------------+---------------+
-
-```{r Number of trips}
-df %>% 
-  group_by(rideable_type, member_casual) %>%
-  summarise(ride_count = n()) 
-```
 
 #### Average duration of one trip throughout a year
 
@@ -760,8 +759,8 @@ df %>%
   ggplot() +
   geom_col(aes(y = ride_mean, x = weekday, fill = member_casual ),
            position = "dodge") + #, show.legend = FALSE, , alpha = 0.8
-  labs(title = "Average duration of one trip by day of the week (minutes)",
-       caption = "Data for the whole year",
+  labs(title = "Average duration of one trip by day of the week",
+       caption = report_caption,
        x ="", y= "minutes",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma()) +
@@ -815,7 +814,7 @@ raw_df  %>%
                  label = format(max,big.mark=",") )
              , vjust = 2) + 
   labs(title = "The maximum ride duration", 
-       caption = "Data for the whole year",
+       caption = report_caption,
        x ="", y= "") +  
   scale_y_continuous(labels = label_comma()) +
   theme(axis.text.y=element_blank(),
@@ -860,8 +859,8 @@ df %>%
   geom_col(aes(y = count, x = weekday, fill = member_casual ),
            position = "stack") + #, show.legend = FALSE, , alpha = 0.8
   labs(title = "Number of trips by day of the week",
-       caption = "Data for the whole year",
-       x ="", y= "Count",
+       caption = report_caption,
+       x ="", y= "Stacked count",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma()) +
   geom_label(aes(x = weekday, y = count,  label = round(count), color = member_casual), 
@@ -886,8 +885,8 @@ df %>%
   geom_col(aes(y = count, x = weekday, fill = member_casual ),
            position = "dodge") + #, show.legend = FALSE, , alpha = 0.8
   labs(title = "Number of trips by day of the week",
-       caption = "Data for the whole year",
-       x ="", y= "Count",
+       caption = report_caption,
+       x ="", y= "Number of trips",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma()) +
   geom_label(aes(x = weekday, y = count,  label = round(count), color = member_casual), 
@@ -932,9 +931,9 @@ df %>%
 
   ggplot(aes(x = Month, y= count, fill = member_casual)) +
   geom_col(position = "dodge") +
-  labs(title = "Trips by month",
-       caption = "",
-       x ="", y= "Count of trips",
+  labs(title = "Number of trips per month",
+       caption = "2022 calendar year data",
+       x ="", y= "",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma()) 
 # +
@@ -952,9 +951,9 @@ df %>%
 
   ggplot(aes(x = Month, y= count, fill = member_casual)) +
   geom_col(position = "stack") +
-  labs(title = "Trips by month",
-       caption = "",
-       x ="", y= "Count of trips",
+  labs(title = "Number of trips per month",
+       caption = "2022 calendar year data",
+       x ="", y= "Stacked count",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma()) 
 # +
@@ -966,8 +965,8 @@ df %>%
 Insights:
 
 -   **Jan and Feb are the toughest month at Cyclistics**.
-    The income is only \~ 16% of year peaks.
-    \
+    The income is only \~ 16% of year peaks.\
+
     **Members generated \~80% of income during Jan and Feb**.
 
 -   In the summer months, the proportion begins to level off.
@@ -979,17 +978,20 @@ df %>%
   # reframe(count = n()) 
 ```
 
-Average trip duration by day of week, month, rider
+#### Average trip duration by day of week, month, rider
 
 ```{r}
-# insp_plt <-
-  df %>%
+df %>% 
+  filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year
+  group_by(member_casual, Month=  month(started_at, label = TRUE)) %>%
+  summarise(aver = mean(trip_duration)) %>%
+  
   ggplot() +
-  geom_bar(aes(x = month(started_at), fill = member_casual),
+  geom_col(aes(x = Month, y=aver, fill = member_casual),
            position = "dodge", alpha = 1) +
-  labs(title = "Trips by days of week",
-       caption = "",
-       x ="", y= "Count of trips",
+  labs(title = "Monthly trip duration",
+       caption = report_caption,
+       x ="", y= "Minutes",
        fill='Type of rider') +
   scale_y_continuous(labels = label_comma())
 
