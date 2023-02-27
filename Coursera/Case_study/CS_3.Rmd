@@ -182,6 +182,7 @@ library(scales)
 library(skimr)
 library(DT)
 library(crosstable)
+library(flextable)
 library(sf)
 options(dplyr.summarise.inform = FALSE)
 options(max.print=100)
@@ -541,9 +542,9 @@ trip_df <- raw_df %>%
            trip_duration < 1499 ) 
 ```
 
-### Logic behind the following restoring missed station names:
+### Restoring missed station names
 
-\
+The logic:\
 1. Build a data frame (`stations_df`) with all station's names and appropriate
 geo data\
 2. Restore station's names according to the dictionary geo data.
@@ -706,7 +707,7 @@ trip_df <- within(trip_df, rm(
 nrow(filter(trip_df, !is.na(restored) ) )
 ```
 
-We've managed to restore station's names within 312.438 observations.\
+We've managed to restore station's names within 291,850 observations.\
 
 Converting cleaned data frame to tibble:
 
@@ -783,7 +784,13 @@ geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
 df %>% 
   group_by(member_casual) %>% 
   summarise(ride_mean = round(mean(trip_duration),1)) %>% 
-  as_flextable()
+  as_flextable()  %>% 
+set_caption(paste("Trip average duration.", report_caption)) %>% delete_part("header")
+
+# df %>% 
+#   crosstable(c(" "= trip_duration), by=c(rider=member_casual), funs=c("Average duration"= mean),  showNA="no", percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
+#   as_flextable(compact=TRUE, keep_id=FALSE)  %>% 
+#   set_caption(paste("Trip average duration.", report_caption))  #%>% delete_part("header")
 ```
 
 Insights:
@@ -807,9 +814,11 @@ Finding the maximum ride duration we assume:
 raw_df  %>% 
   filter(rideable_type != "docked_bike") %>%
   filter(start_station_name !="" & end_station_name != "") %>% 
-  group_by(rideable_type) %>% 
-  summarise(max=as.duration(max(ended_at - started_at))) %>% 
-  as_flextable()
+  # group_by(rideable_type) %>% 
+  # summarise(max=as.duration(max(ended_at - started_at))) %>% 
+  crosstable(c(" "= trip_duration), by=c(bycicle = rideable_type), funs=c("Max trip in minutes"= max),  showNA="no", percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
+  as_flextable(compact=TRUE, keep_id=FALSE)  %>% 
+  set_caption(paste("The maximum ride duration.", report_caption))
 ```
 
 ```{r maximum ride duration}
@@ -841,7 +850,8 @@ raw_df %>%
   filter(start_station_name !="" & end_station_name != "" &
            !is.na(end_lat)) %>% 
   select("rideable_type", "member_casual", "trip_duration") %>% 
-  arrange(desc(trip_duration))
+  arrange(desc(trip_duration)) %>% 
+  head(30)
 ```
 
 Insights:
@@ -872,30 +882,30 @@ df %>%
        caption = "2022 calendar year data",
        x ="", y= "") +  
   scale_y_continuous(labels = label_comma()) +
-  theme(
-    # axis.text.y=element_blank(),
-        axis.text = element_text(size = 16)
-        ) 
+  theme(axis.text = element_text(size = 16) ) 
 
 ```
 
 ```{r count trips, warning=FALSE}
 df %>% 
   filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year 
-  crosstable(c(rideable_type), by=member_casual, total="both", showNA="no", 
-        percent_digits=0, percent_pattern="{n} ({p_col})") %>% # , percent_pattern="{n} ({p_col}/{p_row})"
-  as_flextable(keep_id=FALSE)
+  crosstable(c(" "=rideable_type), by=member_casual, total="both", showNA="no", 
+        percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
+  as_flextable(compact=TRUE, keep_id=FALSE) %>% 
+  set_caption(paste("Number of trips. 2022 calendar year"))
 ```
 
-**Insights:**
-
--   **Casual** riders **prefer e-bikes** (+42.8% over classic bikes)
-
--   while Cyclistic's **members** choose e-bikes and classic bikes roughly
-    equally.
-
--   **Members** use Cyclistics's services **much more often** than casual riders
-    (+ 60 %).
++------------------------------------------------------------------------------+
+| Number of trips                                                              |
++==============================================================================+
+| -   **Casual** riders **prefer e-bikes**                                     |
++------------------------------------------------------------------------------+
+| -   while Cyclistic's **members** choose e-bikes and classic bikes roughly   |
+|     equally                                                                  |
++------------------------------------------------------------------------------+
+| -   **Members** use Cyclistics's services **much more often** than casual    |
+|     riders (+50 %).                                                          |
++------------------------------------------------------------------------------+
 
 #### The mode of day of week throughout a year
 
