@@ -16,4 +16,4 @@ Project have done in **R-studio** and knitted to github document.
 
 HTML document includes interactive plotly graphics and has more sneeky presentation.
 
-[HTML document](/Coursera/Case_study/CS_3.html)
+[HTML document](/Coursera/Case_study/CS_3.md)
