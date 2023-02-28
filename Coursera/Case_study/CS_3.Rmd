@@ -18,26 +18,21 @@ output:
 always_allow_html: yes
 ---
 
-+----------------------+------------+-----------------------------------------+
-| ![](                 |            | ![](){style="vertical-align: middle"}![ |
-| )![](https://seekvec |            | ](https://assets.stickpng.com/images/58 |
-| torlogo.com/wp-conte |            | 0b57fcd9996e24bc43c51f.png){width="89"} |
-| nt/uploads/2022/02/c |            |                                         |
-| oursera-vector-logo- |            |                                         |
-| 2022.png){width="90" |            |                                         |
-| height="49"}         |            |                                         |
-+----------------------+------------+-----------------------------------------+
-| Coursera is the      |            | Google is an American multinational     |
-| global online        |            | corporation specializing in             |
-| learning platform    |            | internet-related services and products. |
-| that offers anyone,  |            |                                         |
-| anywhere access to   |            |                                         |
-| online courses and   |            |                                         |
-| degrees from         |            |                                         |
-| world-class          |            |                                         |
-| universities and     |            |                                         |
-| companies.           |            |                                         |
-+----------------------+------------+-----------------------------------------+
+|                                        |     |                                      |
+|----------------------------------------|-----|--------------------------------------|
+| ![](images/coursera.jpeg){width="100"} |     | ![](images/Google.jpeg){width="100"} |
+
++--------------------------------+------------------+------------------------+
+| ![](images/coursera.jpeg)      |                  | !                      |
+|                                |                  | [](images/Google.jpeg) |
++--------------------------------+------------------+------------------------+
+| Coursera is the global online  |                  | Google is a            |
+| learning platform that offers  |                  | multinational          |
+| anyone, anywhere access to     |                  | corporation            |
+| online courses and degrees     |                  | specializing in        |
+| from world-class universities  |                  | internet-related       |
+| and companies.                 |                  | services and products. |
++--------------------------------+------------------+------------------------+
 
 # Case Study: How Does a Bike-Share navigate speedy Success?
 
@@ -337,72 +332,96 @@ Time scope of all trips is relevant to the scope of business problem.
 
 Quantitative (numeric and POSIXct) data:
 
-+----------+----------+----------+----------+----------+----------+----------+
-| A        | min      | max      | number   | Domain   | **Entity | Notes    |
-| ttribute | value    | value    | of NA    | i        | int      |          |
-|          |          |          |          | ntegrity | egrity** |          |
-+==========+==========+==========+==========+==========+==========+==========+
-| st       | `2022    | `2023    | 0        | \+       | \+       |          |
-| arted_at | -01-01 0 | -01-31 2 |          |          |          |          |
-|          | 0:00:05` | 3:56:09` |          |          |          |          |
-+----------+----------+----------+----------+----------+----------+----------+
-| ended_at | `2022    | `2023    | 0        | \+       | \+       |          |
-|          | -01-01 0 | -02-04 0 |          |          |          |          |
-|          | 0:01:48` | 4:27:03` |          |          |          |          |
-+----------+----------+----------+----------+----------+----------+----------+
-| trip_    | -        | 41387.25 | 0        | fault    | \+       | ne       |
-| duration | 10353.35 |          |          |          |          | gatives, |
-|          |          |          |          |          |          | very     |
-|          |          |          |          |          |          | high     |
-|          |          |          |          |          |          | `        |
-|          |          |          |          |          |          | std dev` |
-+----------+----------+----------+----------+----------+----------+----------+
-| s        | 41.64    | 45.63503 | 0        | fault    | \+       | too big  |
-| tart_lat |          |          |          |          |          | range    |
-|          |          |          |          |          |          | for a    |
-|          |          |          |          |          |          | city     |
-+----------+----------+----------+----------+----------+----------+----------+
-| s        | -87.8    | -73.796  | 0        | fault    | \+       | too big  |
-| tart_lng |          |          |          |          |          | range    |
-|          |          |          |          |          |          | for a    |
-|          |          |          |          |          |          | city     |
-+----------+----------+----------+----------+----------+----------+----------+
-| end_lat  | 0.00     | 42.37000 | 5985     | fault    | fault    | zeros    |
-+----------+----------+----------+----------+----------+----------+----------+
-| end_lng  | -88.1    | 0.00000  | 5985     | fault    | fault    | zeros    |
-+----------+----------+----------+----------+----------+----------+----------+
++---------+---------+---------+---------+---------+---------+---------+
+| A t     | min     | max     | number  | Domain  | -   \   | Notes   |
+| tribute | value   | value   | of NA   | i n     |     \   |         |
+|         |         |         |         | tegrity |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         |     \   |         |
+|         |         |         |         |         | *Entity |         |
+|         |         |         |         |         |     int |         |
+|         |         |         |         |         |     e   |         |
+|         |         |         |         |         |     gr  |         |
+|         |         |         |         |         |         |         |
+|         |         |         |         |         | ity\*\* |         |
++=========+=========+=========+=========+=========+=========+=========+
+| st a    | `       | `       | 0       | \+      | \+      |         |
+| rted_at | 2 02 2  | 2 02 3  |         |         |         |         |
+|         |  -01 -  |  -01 -  |         |         |         |         |
+|         | 01 0 0  | 31 2 3  |         |         |         |         |
+|         | :00:05` | :56:09` |         |         |         |         |
++---------+---------+---------+---------+---------+---------+---------+
+| e       | `       | `       | 0       | \+      | \+      |         |
+| nded_at | 2 02 2  | 2 02 3  |         |         |         |         |
+|         |  -01 -  |  -02 -  |         |         |         |         |
+|         | 01 0 0  | 04 0 4  |         |         |         |         |
+|         | :01:48` | :27:03` |         |         |         |         |
++---------+---------+---------+---------+---------+---------+---------+
+| trip\_  | -   1   | 4       | 0       | fault   | \+      | ne g    |
+| d       |         | 1387.25 |         |         |         | atives, |
+| uration | 0353.35 |         |         |         |         | very    |
+|         |         |         |         |         |         | high    |
+|         |         |         |         |         |         | `s      |
+|         |         |         |         |         |         | td dev` |
++---------+---------+---------+---------+---------+---------+---------+
+| s t     | 41.64   | 4       | 0       | fault   | \+      | too big |
+| art_lat |         | 5.63503 |         |         |         | range   |
+|         |         |         |         |         |         | for a   |
+|         |         |         |         |         |         | city    |
++---------+---------+---------+---------+---------+---------+---------+
+| s t     | -87.8   | -73.796 | 0       | fault   | \+      | too big |
+| art_lng |         |         |         |         |         | range   |
+|         |         |         |         |         |         | for a   |
+|         |         |         |         |         |         | city    |
++---------+---------+---------+---------+---------+---------+---------+
+| end_lat | 0.00    | 4       | 5985    | fault   | fault   | zeros   |
+|         |         | 2.37000 |         |         |         |         |
++---------+---------+---------+---------+---------+---------+---------+
+| end_lng | -88.1   | 0.00000 | 5985    | fault   | fault   | zeros   |
++---------+---------+---------+---------+---------+---------+---------+
 
 : Qualitative (character) data:
 
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| Attribute | Number of | Number of | Domain    | **Entity  | Notes          |
-|           | empty     | unique    | integrity | in        |                |
-|           | entries   |           |           | tegrity** |                |
-+===========+===========+===========+===========+===========+================+
-| ride_id   | 0         | 5858018   | \+        | \+        | \+             |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| ride      | 0         | 3         | \+        | \+        | \+             |
-| able_type |           |           |           |           |                |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| start_sta | 859.785   | 1682      | \+        | fault     | number of      |
-| tion_name |           |           |           |           | stations is    |
-|           |           |           |           |           | greater than   |
-|           |           |           |           |           | station IDs    |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| start_s   | 859.785   | 1314      | \+        | \+        | \+             |
-| tation_id |           |           |           |           |                |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| end_sta   | 920.582   | 1700      | \+        | fault     | number of      |
-| tion_name |           |           |           |           | stations is    |
-|           |           |           |           |           | greater than   |
-|           |           |           |           |           | station IDs    |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| end_s     | 920.582   | 1319      | \+        | \+        | \+             |
-| tation_id |           |           |           |           |                |
-+-----------+-----------+-----------+-----------+-----------+----------------+
-| memb      | 0         | 2         | \+        | \+        | \+             |
-| er_casual |           |           |           |           |                |
-+-----------+-----------+-----------+-----------+-----------+----------------+
++-----------+-----------+-----------+-----------+-----------+-----------+
+| Attribute | Number of | Number of | Domain    | **Entity  | Notes     |
+|           | empty     | unique    | integrity | in        |           |
+|           | entries   |           |           | tegrity** |           |
++===========+===========+===========+===========+===========+===========+
+| ride_id   | 0         | 5858018   | \+        | \+        | \+        |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| ride      | 0         | 3         | \+        | \+        | \+        |
+| able_type |           |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| start_sta | 859.785   | 1682      | \+        | fault     | number of |
+| tion_name |           |           |           |           | stations  |
+|           |           |           |           |           | is        |
+|           |           |           |           |           | greater   |
+|           |           |           |           |           | than      |
+|           |           |           |           |           | station   |
+|           |           |           |           |           | IDs       |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| start_s   | 859.785   | 1314      | \+        | \+        | \+        |
+| tation_id |           |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| end_sta   | 920.582   | 1700      | \+        | fault     | number of |
+| tion_name |           |           |           |           | stations  |
+|           |           |           |           |           | is        |
+|           |           |           |           |           | greater   |
+|           |           |           |           |           | than      |
+|           |           |           |           |           | station   |
+|           |           |           |           |           | IDs       |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| end_s     | 920.582   | 1319      | \+        | \+        | \+        |
+| tation_id |           |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+
+| memb      | 0         | 2         | \+        | \+        | \+        |
+| er_casual |           |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+
 
 How many observations are affected with empty start and finish points?
 
@@ -507,11 +526,12 @@ raw_df %>%
                   arrow = arrow(length = unit(0.5, "cm")))
 ```
 
-The surge at mark 25h(1500 minutes) might be a service notation, e.g. bikes that
-had been left out of parking stations, fully discharged, defected or stolen
+The surge at mark 25h(1500 minutes) **might be a service notation**, e.g. bikes
+that had been left out of parking stations, fully discharged, defected or stolen
 bikes.
 
-Finally, we will consider a trip valid if it satisfies the following conditions:
+Finally, we will **consider a trip valid** if it satisfies the following
+conditions:
 
 1.  `rideable_type != "docked_bike"` to exclude service observations.
 
@@ -710,7 +730,7 @@ trip_df <- within(trip_df, rm(
 nrow(filter(trip_df, !is.na(restored) ) )
 ```
 
-We've managed to restore station's names within 291,850 observations.\
+We've managed to restore station's names within 312,438 (291,850) observations.\
 
 Converting cleaned data frame to tibble:
 
@@ -898,17 +918,17 @@ df %>%
   set_caption(paste("Number of trips. 2022 calendar year"))
 ```
 
-+------------------------------------------------------------------------------+
-| Number of trips                                                              |
-+==============================================================================+
-| -   **Casual** riders **prefer e-bikes**                                     |
-+------------------------------------------------------------------------------+
-| -   while Cyclistic's **members** choose e-bikes and classic bikes roughly   |
-|     equally                                                                  |
-+------------------------------------------------------------------------------+
-| -   **Members** use Cyclistics's services **much more often** than casual    |
-|     riders (+50 %).                                                          |
-+------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------+
+| Number of trips                                                               |
++===============================================================================+
+| -   **Casual** riders **prefer e-bikes**                                      |
++-------------------------------------------------------------------------------+
+| -   while Cyclistic's **members** choose e-bikes and classic bikes roughly    |
+|     equally                                                                   |
++-------------------------------------------------------------------------------+
+| -   **Members** use Cyclistics's services **much more often** than casual     |
+|     riders (+50 %).                                                           |
++-------------------------------------------------------------------------------+
 
 #### The mode of day of week throughout a year
 
@@ -981,20 +1001,18 @@ df %>%
   set_caption(paste("Cross table. Number of trips by Month and by day of the week", report_caption))
 ```
 
-+----------------+----------------+------------------------+
-| Rider          | The mode       | Anti-mode\             |
-|                |                | (the least frequent    |
-|                |                | score)                 |
-+================+================+========================+
-| Member riders  | Thursday\      | Sunday                 |
-|                | (Tue, Wed,     |                        |
-|                | Thu - roughly  |                        |
-|                | equal)         |                        |
-+----------------+----------------+------------------------+
-| Casual riders  | Saturday       | Monday - Tuesday       |
-+----------------+----------------+------------------------+
-| Population     | Saturday       | Monday                 |
-+----------------+----------------+------------------------+
++----------------------+----------------------+------------------------------+
+| Rider                | The mode             | Anti-mode\                   |
+|                      |                      | (the least frequent score)   |
++======================+======================+==============================+
+| Member riders        | Thursday\            | Sunday                       |
+|                      | (Tue, Wed, Thu -     |                              |
+|                      | roughly equal)       |                              |
++----------------------+----------------------+------------------------------+
+| Casual riders        | Saturday             | Monday - Tuesday             |
++----------------------+----------------------+------------------------------+
+| Population           | Saturday             | Monday                       |
++----------------------+----------------------+------------------------------+
 
 Insights:
 
@@ -1120,6 +1138,58 @@ df %>%
 
 ### Conclusions
 
+We found a significant differences in behaviour among riders segments.\
+**Members** use Cyclistics to fulfill their day-day obligations, e.g. commute to
+work or school, run errands.\
+Members ride more often but their trips are shorter.\
+**Casual** riders most likely use bike share to explore Chicago, get to
+appointments or social engagements, and more.
+
++------------------+-----------------------------+---------------------------+
+|                  | members                     | casual riders             |
++==================+=============================+===========================+
+| number of trips  |                             |                           |
++------------------+-----------------------------+---------------------------+
+| average trip     |                             |                           |
+| duration         |                             |                           |
++------------------+-----------------------------+---------------------------+
+| mode of day of   | Tue, Wed, Thu               | Sat                       |
+| week             |                             |                           |
++------------------+-----------------------------+---------------------------+
+| bike type        | doesn't matter              | e-bike                    |
+| preference       |                             |                           |
++------------------+-----------------------------+---------------------------+
+| anti-mode of day | Sun                         | Mon-Tue                   |
+| of week          |                             |                           |
++------------------+-----------------------------+---------------------------+
+| weather          | medium                      | high                      |
+| dependence       |                             |                           |
++------------------+-----------------------------+---------------------------+
+| seasonal         | medium\                     | high                      |
+| patterns\        | 1:4                         |                           |
+| Jan -Jul         |                             |                           |
++------------------+-----------------------------+---------------------------+
+| trip cost        |                             |                           |
++------------------+-----------------------------+---------------------------+
+| most likely      | commute to work or school,  | explore Chicago, get to   |
+| purpose of use   | run errands, performing     | appointments or social    |
+|                  | daily duties                | engagements               |
++------------------+-----------------------------+---------------------------+
+| membership       | 119\$                       | 0\$                       |
++------------------+-----------------------------+---------------------------+
+| classic bike     | 0\$                         | 1\$                       |
+| undocking        |                             |                           |
++------------------+-----------------------------+---------------------------+
+| electric bike    |                             | 2\$                       |
+| undocking        |                             |                           |
++------------------+-----------------------------+---------------------------+
+| classic bike 1   |                             |                           |
+| minute           |                             |                           |
++------------------+-----------------------------+---------------------------+
+| electric bike 1  |                             |                           |
+| minute           |                             |                           |
++------------------+-----------------------------+---------------------------+
+
 ```{r}
 # geo_df <-
 # stations_df %>% 
@@ -1146,3 +1216,17 @@ df %>%
 #                  colour = "red"))  # , label=station_name
 # ggplotly(insp_plt)
 ```
+
+# To-Dos
+
+-   Finish the report as is -\> Conclusions
+
+-   Add Boston 2022 weather (temperature, precipitation)
+
+-   `trip_cost` add 2022 pricing
+
+-   add viz with geo data most pop stations
+
+-   correlation member_casual - weather
+
+-   finalization of the report
