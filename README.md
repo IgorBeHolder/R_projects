@@ -1,16 +1,37 @@
-|                                                                                                                                                                |     |                                                                                                                                         |
-|-------------------------------------|----------|--------------------------|
-| <img src="https://companieslogo.com/img/orig/COUR_BIG-e3284ace.png" width="100"/>                                                                              |     | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" width="100"/> |
-| Coursera is the global online learning platform that offers anyone, anywhere access to online courses and degrees from world-class universities and companies. |     |  Google is a multinational corporation specializing in internet-related services and products.                                          |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| <img src="https://companieslogo.com/img/orig/COUR_BIG-e3284ace.png" width="100"/>                                                                              |           | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" width="100"/> |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| Coursera is the global online learning platform that offers anyone, anywhere access to online courses and degrees from world-class universities and companies. |           | Google is a multinational corporation specializing in internet-related services and products.                                           |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
-# Case Study: How Does a Bike-Share navigate speedy Success?
++--------------------+---+------------------------------------------------------------------+
+|                    |   | [Resume](/Coursera/Resume/DA%20Resume.pdf)                       |
+|                    |   |                                                                  |
+|                    |   | [LinkedIn](https://www.linkedin.com/in/igor-sorochan-3a1485264/) |
+|                    |   |                                                                  |
+|                    |   | [GitHub](https://github.com/IgorBeHolder)                        |
+|                    |   |                                                                  |
+|                    |   | [Kaggle](https://www.kaggle.com/igorsorochan/competitions)       |
+|                    |   |                                                                  |
+|                    |   | +90 535-639-8703                                                 |
+|                    |   |                                                                  |
+|                    |   | [isorochan\@gmail.com](mailto:isorochan@gmail.com)\              |
+|                    |   | \                                                                |
+|                    |   | For more information, please contact me via email.               |
++====================+===+==================================================================+
+|                    |   |                                                                  |
++--------------------+---+------------------------------------------------------------------+
 
-#### This is a Coursera Capstone project in a Google Data Analyst professional certificate program.
-
-### Case Study: How Does a Bike-Share navigate speedy Success?
-
-Project have done in **R-studio** and knitted to github document.
-
-HTML document includes interactive plotly graphics and has more sneeky presentation.
-
-[HTML document](/Coursera/Case_study/CS_3.md)
++-------------------------------------------------------------------------------------------+-------------+----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| Project                                                                                   | Language    | Output                                                                                                         |                                                                                                                  |
++===========================================================================================+=============+================================================================================================================+==================================================================================================================+
+| Coursera Capstone project.\                                                               | R           | [HTML document](/Coursera/Case_study/CS_3.html)\                                                               | Project have done in **R-studio** and knitted to github document.\                                               |
+| Google Data Analyst professional certificate program                                      |             | [GitHub document](/Coursera/Case_study/CS_3.md)                                                                | Currently R notebooks in GitHub has a limited performance.\                                                      |
+|                                                                                           |             |                                                                                                                | Best practice is to open html document which includes interactive plotly graphics and has a better presentation. |
++-------------------------------------------------------------------------------------------+-------------+----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| One-armed bandit slot machine simulator                                                   | Python      | [Google Colab Notebook](https://colab.research.google.com/drive/1XGkMiF_dWvoNognW9dxFVx-6rfXnr1Y6?usp=sharing) |                                                                                                                  |
++-------------------------------------------------------------------------------------------+-------------+----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| [Kaggle](https://www.kaggle.com/igorsorochan/competitions)                                | Python      | 24 out of 3095 students                                                                                        |                                                                                                                  |
+|                                                                                           |             |                                                                                                                |                                                                                                                  |
+| "Churn prediction". [MIPT](https://mipt.ru/english/edu/phystechschools/psami) competition |             |                                                                                                                |                                                                                                                  |
++-------------------------------------------------------------------------------------------+-------------+----------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
