@@ -1,6 +1,6 @@
 ---
 title: "Coursera Capstone project"
-author: "Igr Sorochan"
+author: "Igor Sorochan"
 date: '`r Sys.Date()`'
 output:
   html_document:
@@ -18,21 +18,11 @@ output:
 always_allow_html: yes
 ---
 
-|                                        |     |                                      |
-|----------------------------------------|-----|--------------------------------------|
-| ![](images/coursera.jpeg){width="100"} |     | ![](images/Google.jpeg){width="100"} |
-
-+--------------------------------+------------------+------------------------+
-| ![](images/coursera.jpeg)      |                  | !                      |
-|                                |                  | [](images/Google.jpeg) |
-+--------------------------------+------------------+------------------------+
-| Coursera is the global online  |                  | Google is a            |
-| learning platform that offers  |                  | multinational          |
-| anyone, anywhere access to     |                  | corporation            |
-| online courses and degrees     |                  | specializing in        |
-| from world-class universities  |                  | internet-related       |
-| and companies.                 |                  | services and products. |
-+--------------------------------+------------------+------------------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+-----------------------------------------------------------------------------------------------+
+| ![](images/coursera.jpeg){width="100"}                                                                                                                         |            | ![](images/Google.jpeg){width="100"}                                                          |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+-----------------------------------------------------------------------------------------------+
+| Coursera is the global online learning platform that offers anyone, anywhere access to online courses and degrees from world-class universities and companies. |            | Google is a multinational corporation specializing in internet-related services and products. |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+-----------------------------------------------------------------------------------------------+
 
 # Case Study: How Does a Bike-Share navigate speedy Success?
 
@@ -40,12 +30,9 @@ always_allow_html: yes
 
 ### Scenario
 
-I'm a junior data analyst working in the marketing analyst team at Cyclistic, a
-bike-share company in Chicago.\
+I'm a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago.\
 
-Lily Moreno, the director of marketing, believes the company's future success
-depends on maximizing the number of annual memberships. Therefore, my team wants
-to understand\
+Lily Moreno, the director of marketing, believes the company's future success depends on maximizing the number of annual memberships. Therefore, my team wants to understand\
 \
 **How casual riders and annual members use Cyclistic bikes differently?**\
 
@@ -53,40 +40,15 @@ to understand\
 
 **About the company**
 
-Cyclistic is bike share system across Chicago and Evanston. Cyclistic provides
-residents and visitors with a convenient, fun and affordable transportation
-option for getting around and exploring Chicago.
+Cyclistic is bike share system across Chicago and Evanston. Cyclistic provides residents and visitors with a convenient, fun and affordable transportation option for getting around and exploring Chicago.
 
-Cyclistic, like other bike share systems, consists of a fleet of
-specially-designed, sturdy and durable bikes that are locked into a network of
-docking stations throughout the region. The bikes can be unlocked from one
-station and returned to any other station in the system. People use bike share
-to explore Chicago, commute to work or school, run errands, get to appointments
-or social engagements, and more.
+Cyclistic, like other bike share systems, consists of a fleet of specially-designed, sturdy and durable bikes that are locked into a network of docking stations throughout the region. The bikes can be unlocked from one station and returned to any other station in the system. People use bike share to explore Chicago, commute to work or school, run errands, get to appointments or social engagements, and more.
 
-Cyclistic is available for use 24 hours/day, 7 days/week, 365 days/year, and
-riders have access to all bikes and stations across the system.
+Cyclistic is available for use 24 hours/day, 7 days/week, 365 days/year, and riders have access to all bikes and stations across the system.
 
-Until now, Cyclistic's marketing strategy relied on building general awareness
-and appealing to broad consumer segments. One approach that helped make these
-things possible was the flexibility of its pricing plans: single-ride passes,
-full-day passes, and annual memberships. Customers who purchase single-ride or
-full-day passes are referred to as casual riders. Customers who purchase annual
-memberships are Cyclistic members.
+Until now, Cyclistic's marketing strategy relied on building general awareness and appealing to broad consumer segments. One approach that helped make these things possible was the flexibility of its pricing plans: single-ride passes, full-day passes, and annual memberships. Customers who purchase single-ride or full-day passes are referred to as casual riders. Customers who purchase annual memberships are Cyclistic members.
 
-Cyclistic's finance analysts have concluded that annual members are much more
-profitable than casual riders. Although the pricing flexibility helps Cyclistic
-attract more customers, Moreno believes that **maximizing the number of annual
-members** will be **key to future growth**. Rather than creating a marketing
-campaign that targets all-new customers, Moreno believes there is a very good
-chance **to convert casual riders into members**. She notes that casual riders
-are already aware of the Cyclistic program and have chosen Cyclistic for their
-mobility needs. Moreno has set a clear goal: **Design marketing strategies aimed
-at converting casual riders into annual members**. In order to do that, however,
-the marketing analyst team needs to better understand how annual members and
-casual riders differ, why casual riders would buy a membership, and how digital
-media could affect their marketing tactics. Moreno and her team are interested
-in analyzing the Cyclistic historical bike trip data to identify trends.
+Cyclistic's finance analysts have concluded that annual members are much more profitable than casual riders. Although the pricing flexibility helps Cyclistic attract more customers, Moreno believes that **maximizing the number of annual members** will be **key to future growth**. Rather than creating a marketing campaign that targets all-new customers, Moreno believes there is a very good chance **to convert casual riders into members**. She notes that casual riders are already aware of the Cyclistic program and have chosen Cyclistic for their mobility needs. Moreno has set a clear goal: **Design marketing strategies aimed at converting casual riders into annual members**. In order to do that, however, the marketing analyst team needs to better understand how annual members and casual riders differ, why casual riders would buy a membership, and how digital media could affect their marketing tactics. Moreno and her team are interested in analyzing the Cyclistic historical bike trip data to identify trends.
 
 ### Project stakeholders
 
@@ -100,8 +62,7 @@ in analyzing the Cyclistic historical bike trip data to identify trends.
 
 -   Cyclistic marketing analytics team
 
-From these insights, my team will design a new marketing strategy to convert
-casual riders into annual members.
+From these insights, my team will design a new marketing strategy to convert casual riders into annual members.
 
 My team has to produce a report with the following deliverables:
 
@@ -123,22 +84,15 @@ My team has to produce a report with the following deliverables:
 
 2.  Why would casual riders buy Cyclistic annual memberships?
 
-3.  How can Cyclistic use digital media to influence casual riders to become
-    members?
+3.  How can Cyclistic use digital media to influence casual riders to become members?
 
 ## 2. PREPARE
 
 ### Data location
 
-Lyft Bikes and Scooters, LLC ("Bikeshare") operates the City of Chicago's
-("City") Divvy bicycle sharing service. Bikeshare and the City are committed to
-supporting bicycling as an alternative transportation option. As part of that
-commitment, the City permits Bikeshare to make certain Divvy system data owned
-by the City ("Data") available to the publicData organization.\
+Lyft Bikes and Scooters, LLC ("Bikeshare") operates the City of Chicago's ("City") Divvy bicycle sharing service. Bikeshare and the City are committed to supporting bicycling as an alternative transportation option. As part of that commitment, the City permits Bikeshare to make certain Divvy system data owned by the City ("Data") available to the publicData organization.\
 
-The data has been made available by Motivate International Inc. under [this
-license.](https://www.divvybikes.com/data-license-agreement) It is a
-**First-party data.**
+The data has been made available by Motivate International Inc. under [this license.](https://www.divvybikes.com/data-license-agreement) It is a **First-party data.**
 
 We'll use that Data in Case study as Cyclistic's historical trip data.
 
@@ -146,8 +100,7 @@ Data is reliable, original, comprehensive, current and cited.\
 
 ### Data credibility and data bias
 
-The Data itself is a First-party data and it is credible and has no evidence of
-bias of any kind.
+The Data itself is a First-party data and it is credible and has no evidence of bias of any kind.
 
 ### Data ethics
 
@@ -155,14 +108,11 @@ There is no any personal information that we can associate with real customers.\
 
 Each trip is anonymized.
 
-We accept all limitations on Data usage noted in "Prohibited conduct" in [**Data
-License Agreement**.](https://www.divvybikes.com/data-license-agreement)
+We accept all limitations on Data usage noted in "Prohibited conduct" in [**Data License Agreement**.](https://www.divvybikes.com/data-license-agreement)
 
 ### Data tools
 
-At first glance, the overall dataset would be **Large** enough to process (mlns
-of rows) and will force any available spreadsheet software to struggle, so our
-team decided to use R to handle it.\
+At first glance, the overall dataset would be **Large** enough to process (mlns of rows) and will force any available spreadsheet software to struggle, so our team decided to use R to handle it.\
 
 Let's do that.
 
@@ -186,8 +136,7 @@ options(dplyr.summarise.inform = FALSE)
 options(max.print=100)
 ```
 
-Take a mention on the current working folder in output of `getwd()` and if
-redefine it if needed:
+Take a mention on the current working folder in output of `getwd()` and if redefine it if needed:
 
 ```{r current working folder }
 getwd()
@@ -197,12 +146,9 @@ getwd()
 
 Original data lives [here](https://divvy-tripdata.s3.amazonaws.com/index.html).\
 
-We've selected appropriate .zip files from 01-Jan-2022 till 30-Jan2023 (13
-months of data were available as of the date of this report) and store them
-locally at `zip_dir` folder.
+We've selected appropriate .zip files from 01-Jan-2022 till 30-Jan2023 (13 months of data were available as of the date of this report) and store them locally at `zip_dir` folder.
 
-Defining the directory where all original zip files are placed and defining
-`report_caption` :
+Defining the directory where all original zip files are placed and defining `report_caption` :
 
 ```{r zip folder}
 zip_dir<- paste0(getwd(),"/Divvy_tripdata/") 
@@ -243,25 +189,19 @@ Let's go further.
 
 ### Data transformations
 
-#### Do the data frames have the same columns & types?
+#### Do the data frames have the same columns and types?
 
 Let's check it out:
 
 ```{r cols consistency}
 janitor::compare_df_cols_same(myfiles)
-
-# The alternative method is to print out any mismatches:
-# Returned 0 rows means all data frames are ready to bind.
-# janitor::compare_df_cols(myfiles, return = "mismatch")
 ```
 
-TRUE - means that all columns in all data frames have appropriate names and
-types of data.
+TRUE - means that all columns in all data frames have appropriate names and types of data.
 
 #### Finally forming united table.
 
-Binding data frames by row, making a longer result (few seconds to execute,
-don't panic):
+Binding data frames by row, making a longer result (few seconds to execute, don't panic):
 
 ```{r binding to raw_df}
 raw_df <- dplyr::bind_rows(myfiles)
@@ -284,8 +224,7 @@ raw_df$ended_at = ymd_hms(raw_df$ended_at)
 
 It is obvious that we'll need a duration information in our analysis.
 
-Let's add a calculated column `trip_duration` that counts trip duration in
-**minutes**.
+Let's add a calculated column `trip_duration` that counts trip duration in **minutes**.
 
 ```{r adding trip duration (in minutes)}
 raw_df[,"trip_duration"] <- as.numeric(as.duration(raw_df$ended_at - raw_df$started_at), "minutes")
@@ -295,30 +234,26 @@ raw_df[,"trip_duration"] <- as.numeric(as.duration(raw_df$ended_at - raw_df$star
 
 Tables naming
 
-+-----------------------------+----------------------------+------------------+
-| Tables used in the project  | Table purpose              | Table dimensions |
-+=============================+============================+==================+
-| raw_df                      | untouched imported data    | 5,858,018 x 14   |
-+-----------------------------+----------------------------+------------------+
-| trip_df                     | store filtered valid data  | 5,548,446 x 15   |
-+-----------------------------+----------------------------+------------------+
-| stations_df                 | station dictionary         | 1,716 x 6        |
-+-----------------------------+----------------------------+------------------+
-| stations_df2                | temporary table            |                  |
-+-----------------------------+----------------------------+------------------+
-| df                          | tibble, cleaned data       | 5,548,446 x 16   |
-+-----------------------------+----------------------------+------------------+
++----------------------------+-----------------------------+------------------+
+| Tables used in the project | Table purpose               | Table dimensions |
++============================+=============================+==================+
+| raw_df                     | untouched imported data     | 5,858,018 x 13   |
++----------------------------+-----------------------------+------------------+
+| trip_df                    | store filtered valid data,\ | 5,548,446 x 15   |
+|                            | add calculated columns      |                  |
++----------------------------+-----------------------------+------------------+
+| stations_df                | station dictionary          | 1,716 x 6        |
++----------------------------+-----------------------------+------------------+
+| stations_df2               | temporary table             |                  |
++----------------------------+-----------------------------+------------------+
+| df                         | tibble, cleaned data        | 5,548,446 x 16   |
++----------------------------+-----------------------------+------------------+
 
-1.  **Domain integrity:** Domain integrity ensures that each value in a column
-    falls within the permissible range of the domain of that column. Moreover,
-    the conditions for default and null values must also be met.
+1.  **Domain integrity:** Domain integrity ensures that each value in a column falls within the permissible range of the domain of that column. Moreover, the conditions for default and null values must also be met.
 
-2.  **Entity integrity:** Entity integrity ensures that each row of the database
-    has a non-null unique primary key.
+2.  **Entity integrity:** Entity integrity ensures that each row of the database has a non-null unique primary key.
 
-3.  **Referential integrity:** Referential integrity ensures a valid
-    relationship between two tables by checking the relationship between the
-    foreign key and primary key in those tables.
+3.  **Referential integrity:** Referential integrity ensures a valid relationship between two tables by checking the relationship between the foreign key and primary key in those tables.
 
 Let's evaluate values domain for integrity:
 
@@ -332,96 +267,43 @@ Time scope of all trips is relevant to the scope of business problem.
 
 Quantitative (numeric and POSIXct) data:
 
-+---------+---------+---------+---------+---------+---------+---------+
-| A t     | min     | max     | number  | Domain  | -   \   | Notes   |
-| tribute | value   | value   | of NA   | i n     |     \   |         |
-|         |         |         |         | tegrity |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         |     \   |         |
-|         |         |         |         |         | *Entity |         |
-|         |         |         |         |         |     int |         |
-|         |         |         |         |         |     e   |         |
-|         |         |         |         |         |     gr  |         |
-|         |         |         |         |         |         |         |
-|         |         |         |         |         | ity\*\* |         |
-+=========+=========+=========+=========+=========+=========+=========+
-| st a    | `       | `       | 0       | \+      | \+      |         |
-| rted_at | 2 02 2  | 2 02 3  |         |         |         |         |
-|         |  -01 -  |  -01 -  |         |         |         |         |
-|         | 01 0 0  | 31 2 3  |         |         |         |         |
-|         | :00:05` | :56:09` |         |         |         |         |
-+---------+---------+---------+---------+---------+---------+---------+
-| e       | `       | `       | 0       | \+      | \+      |         |
-| nded_at | 2 02 2  | 2 02 3  |         |         |         |         |
-|         |  -01 -  |  -02 -  |         |         |         |         |
-|         | 01 0 0  | 04 0 4  |         |         |         |         |
-|         | :01:48` | :27:03` |         |         |         |         |
-+---------+---------+---------+---------+---------+---------+---------+
-| trip\_  | -   1   | 4       | 0       | fault   | \+      | ne g    |
-| d       |         | 1387.25 |         |         |         | atives, |
-| uration | 0353.35 |         |         |         |         | very    |
-|         |         |         |         |         |         | high    |
-|         |         |         |         |         |         | `s      |
-|         |         |         |         |         |         | td dev` |
-+---------+---------+---------+---------+---------+---------+---------+
-| s t     | 41.64   | 4       | 0       | fault   | \+      | too big |
-| art_lat |         | 5.63503 |         |         |         | range   |
-|         |         |         |         |         |         | for a   |
-|         |         |         |         |         |         | city    |
-+---------+---------+---------+---------+---------+---------+---------+
-| s t     | -87.8   | -73.796 | 0       | fault   | \+      | too big |
-| art_lng |         |         |         |         |         | range   |
-|         |         |         |         |         |         | for a   |
-|         |         |         |         |         |         | city    |
-+---------+---------+---------+---------+---------+---------+---------+
-| end_lat | 0.00    | 4       | 5985    | fault   | fault   | zeros   |
-|         |         | 2.37000 |         |         |         |         |
-+---------+---------+---------+---------+---------+---------+---------+
-| end_lng | -88.1   | 0.00000 | 5985    | fault   | fault   | zeros   |
-+---------+---------+---------+---------+---------+---------+---------+
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| Attribute     | min value             | max value             | number of NA | Domain integrity | Entity integrity | Notes                          |
++===============+=======================+=======================+==============+==================+==================+================================+
+| started_at    | `2022-01-01 00:00:05` | `2023-01-31 23:56:09` | 0            | \+               | \+               |                                |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| ended_at      | `2022-01-01 00:01:48` | `2023-02-04 04:27:03` | 0            | \+               | \+               |                                |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| trip_duration | 10353.35              | 41387.25              | 0            | fault            | \+               | negatives, very high `std dev` |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| start_lat     | 41.64                 | 45.63503              | 0            | fault            | \+               | too big range for a city       |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| start_lng     | -87.8                 | -73.796               | 0            | fault            | \+               | too big range for a city       |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| end_lat       | 0.00                  | 42.37000              | 5985         | fault            | fault            | zeros                          |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
+| end_lng       | -88.1                 | 0.00000               | 5985         | fault            | fault            | zeros                          |
++---------------+-----------------------+-----------------------+--------------+------------------+------------------+--------------------------------+
 
-: Qualitative (character) data:
+: Qualitative(character)data:
 
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| Attribute | Number of | Number of | Domain    | **Entity  | Notes     |
-|           | empty     | unique    | integrity | in        |           |
-|           | entries   |           |           | tegrity** |           |
-+===========+===========+===========+===========+===========+===========+
-| ride_id   | 0         | 5858018   | \+        | \+        | \+        |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| ride      | 0         | 3         | \+        | \+        | \+        |
-| able_type |           |           |           |           |           |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| start_sta | 859.785   | 1682      | \+        | fault     | number of |
-| tion_name |           |           |           |           | stations  |
-|           |           |           |           |           | is        |
-|           |           |           |           |           | greater   |
-|           |           |           |           |           | than      |
-|           |           |           |           |           | station   |
-|           |           |           |           |           | IDs       |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| start_s   | 859.785   | 1314      | \+        | \+        | \+        |
-| tation_id |           |           |           |           |           |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| end_sta   | 920.582   | 1700      | \+        | fault     | number of |
-| tion_name |           |           |           |           | stations  |
-|           |           |           |           |           | is        |
-|           |           |           |           |           | greater   |
-|           |           |           |           |           | than      |
-|           |           |           |           |           | station   |
-|           |           |           |           |           | IDs       |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| end_s     | 920.582   | 1319      | \+        | \+        | \+        |
-| tation_id |           |           |           |           |           |
-+-----------+-----------+-----------+-----------+-----------+-----------+
-| memb      | 0         | 2         | \+        | \+        | \+        |
-| er_casual |           |           |           |           |           |
-+-----------+-----------+-----------+-----------+-----------+-----------+
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| Attribute          | Number of empty entries | Number of unique | Domain integrity | **Entity integrity** | Notes                                          |
++====================+=========================+==================+==================+======================+================================================+
+| ride_id            | 0                       | 5858018          | \+               | \+                   | \+                                             |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| rideable_type      | 0                       | 3                | \+               | \+                   | \+                                             |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| start_station_name | 859785                  | 1682             | \+               | fault                | number of stations is greater than station IDs |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| start_station_id   | 859785                  | 1314             | \+               | \+                   | \+                                             |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| end_station_name   | 920582                  | 1700             | \+               | fault                | number of stations is greater than station IDs |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| end_station_id     | 920582                  | 1319             | \+               | \+                   | \+                                             |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
+| member_casual      | 0                       | 2                | \+               | \+                   | \+                                             |
++--------------------+-------------------------+------------------+------------------+----------------------+------------------------------------------------+
 
 How many observations are affected with empty start and finish points?
 
@@ -431,9 +313,7 @@ raw_df %>%
   nrow()
 ```
 
-A lot of data affected. We might manage to restore some observations stations
-names by geo data if it possible. This will potentially lead us to more
-comprehensive reports with geo data.\
+A lot of data affected. We might manage to restore some observations stations names by geo data if it possible. This will potentially lead us to more comprehensive reports with geo data.\
 
 ### Data issues
 
@@ -458,7 +338,7 @@ raw_df %>%
         axis.text = element_text(size = 16) ) 
 ```
 
-The reason could be a complete discharge of the batteries..
+The reason could be a complete discharge of the batteries.
 
 100 observations have negative trip duration.
 
@@ -473,19 +353,13 @@ raw_df %>%
 
 #### The data is not clean
 
-1.  **Domain integrity issue.** Standard deviation of `trip_duration` is
-    unreasonably high: ( 175 min, while mean =19 min). This clearly indicates
-    the presence of extreme outliers.
+1.  **Domain integrity issue.** Standard deviation of `trip_duration` is unreasonably high: ( 175 min, while mean =19 min). This clearly indicates the presence of extreme outliers.
 
-    Some `started_at` is greater than `ended_at`. It means negative
-    `trip_duration` .
+    Some `started_at` is greater than `ended_at`. It means negative `trip_duration` .
 
-2.  **Entity integrity issue.** 5985 trips (0.1% of all trips) have no gps data
-    at all. This concern we might take into account if we'll plan to investigate
-    routes. Some observations at end stations include zeros.
+2.  **Entity integrity issue.** 5985 trips (0.1% of all trips) have no gps data at all. This concern we might take into account if we'll plan to investigate routes. Some observations at end stations include zeros.
 
-    1.340.374 (23 % of all trips) of data concerning station's names is empty.
-    99,5 % among them are electric bikes.
+    1.340.374 (23 % of all trips) of data concerning station's names is empty. 99,5 % among them are electric bikes.
 
 3.  **Referential integrity issue.** Station's naming is not consistent.
 
@@ -495,14 +369,11 @@ raw_df %>%
 
 1.  Exclude data with negative `trip_duration` (100 observations)
 
-2.  Exclude data with too big `trip_duration` (greater than 1499 minutes, \~25
-    hours) and with simultaneously empty `end_station_name`
+2.  Exclude data with too big `trip_duration` (greater than 1499 minutes, \~25 hours) and with simultaneously empty `end_station_name`
 
-3.  Exclude classic bike's trips with missing station's names (3863
-    observations)
+3.  Exclude classic bike's trips with missing station's names (3863 observations)
 
-4.  Restore stations ID by geo data where possible. Maybe this won't screw the
-    overall patterns but it's better to restore the missing data.
+4.  Restore stations ID by geo data where possible. Maybe this won't screw the overall patterns but it's better to restore the missing data.
 
 #### Dropping irrelevant data
 
@@ -526,23 +397,15 @@ raw_df %>%
                   arrow = arrow(length = unit(0.5, "cm")))
 ```
 
-The surge at mark 25h(1500 minutes) **might be a service notation**, e.g. bikes
-that had been left out of parking stations, fully discharged, defected or stolen
-bikes.
+The surge at mark 25h(1500 minutes) **might be a service notation**, e.g. bikes that had been left out of parking stations, fully discharged, defected or stolen bikes.
 
-Finally, we will **consider a trip valid** if it satisfies the following
-conditions:
+Finally, we will **consider a trip valid** if it satisfies the following conditions:
 
 1.  `rideable_type != "docked_bike"` to exclude service observations.
 
-2.  `trip_duration` \> 1 minute (exclude any trips that were below 60 seconds in
-    length (potentially false starts or users trying to re-dock a bike to ensure
-    it was secure).
+2.  `trip_duration` \> 1 minute (exclude any trips that were below 60 seconds in length (potentially false starts or users trying to re-dock a bike to ensure it was secure).
 
-3.  `trip_duration` \< 1499 minutes(25 hours). ([NOTE: If you do not return a
-    bike within a 24-hour period, you may be charged a lost or stolen bike fee
-    of \$250 (plus
-    tax](https://help.divvybikes.com/hc/en-us/articles/360033484791-What-if-I-keep-a-bike-out-too-long-)).
+3.  `trip_duration` \< 1499 minutes(25 hours). ([NOTE: If you do not return a bike within a 24-hour period, you may be charged a lost or stolen bike fee of \$250 (plus tax](https://help.divvybikes.com/hc/en-us/articles/360033484791-What-if-I-keep-a-bike-out-too-long-)).
 
 4.  `end_station_name` is not empty
 
@@ -553,8 +416,7 @@ raw_df %>%
   nrow()
 ```
 
-This assumption will exclude 308,332 (5.2 %) observations from "dirty" data.
-This is acceptable.
+This assumption will exclude 308,332 (5.2 %) observations from "dirty" data. This is acceptable.
 
 We keep the source untouched and put valid data to `trip_df` :
 
@@ -568,8 +430,7 @@ trip_df <- raw_df %>%
 ### Restoring missed station names
 
 The logic:\
-1. Build a data frame (`stations_df`) with all station's names and appropriate
-geo data\
+1. Build a data frame (`stations_df`) with all station's names and appropriate geo data\
 2. Restore station's names according to the dictionary geo data.
 
 Let's try.
@@ -770,8 +631,7 @@ We constrain data with :
 (trip_limit <- mean(df$trip_duration) + 5* sd(df$trip_duration) )
 ```
 
-It removes only 17.837 rows (0.3 % of all trips). So our conclusions will be
-based on 99.7 % of "clean" data.
+It removes only 17.837 rows (0.3 % of all trips). So our conclusions will be based on 99.7 % of "clean" data.
 
 ```{r count dropped rows}
 count(filter(df, trip_duration > trip_limit))
@@ -806,7 +666,7 @@ geom_label(aes(y = ride_mean, x = weekday, label = ride_mean,
 ```{r the average ride_length for members and casual riders}
 df %>% 
   group_by(member_casual) %>% 
-  summarise(ride_mean = round(mean(trip_duration),1)) %>% 
+  summarise(ride_mean = round(mean(trip_duration),1) ) %>% 
   as_flextable()  %>% 
 set_caption(paste("Trip average duration.", report_caption)) %>% delete_part("header")
 
@@ -820,8 +680,7 @@ Insights:
 
 -   Average duration of **casual riders is significantly higher** (+ 51 %)
 
--   Trips on **Wednesdays** are 17 % shorter than on weekends among all
-    customers.
+-   Trips on **Wednesdays** are 17 % shorter than on weekends among all customers.
 
 #### The maximum ride duration
 
@@ -883,9 +742,7 @@ Insights:
 
 -   The electric bike was able to last for 8 hours)
 
--   The absolute majority of long rides on e-bikes were taken by members.
-    (Pricing starts at \$1 to unlock plus \$0.39/minute for casual riders (\$0
-    to unlock plus **\$0.16/minute for members)**.)
+-   The absolute majority of long rides on e-bikes were taken by members. (Pricing starts at \$1 to unlock plus \$0.39/minute for casual riders (\$0 to unlock plus **\$0.16/minute for members)**.)
 
 #### Number of trips throughout a year
 
@@ -909,7 +766,7 @@ df %>%
 
 ```
 
-```{r count trips, warning=FALSE}
+```{r count trips bike type, warning=FALSE}
 df %>% 
   filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year 
   crosstable(c(" "=rideable_type), by=member_casual, total="both", showNA="no", 
@@ -918,17 +775,26 @@ df %>%
   set_caption(paste("Number of trips. 2022 calendar year"))
 ```
 
-+-------------------------------------------------------------------------------+
-| Number of trips                                                               |
-+===============================================================================+
-| -   **Casual** riders **prefer e-bikes**                                      |
-+-------------------------------------------------------------------------------+
-| -   while Cyclistic's **members** choose e-bikes and classic bikes roughly    |
-|     equally                                                                   |
-+-------------------------------------------------------------------------------+
-| -   **Members** use Cyclistics's services **much more often** than casual     |
-|     riders (+50 %).                                                           |
-+-------------------------------------------------------------------------------+
+```{r count trips months, warning=FALSE}
+df %>% 
+  filter(started_at < ymd("2023-01-01")) %>% # limit to a calendar year 
+  mutate(Month=  month(started_at, label = TRUE)) %>% 
+  crosstable(c(" "= Month), by=member_casual, total="both", showNA="no", 
+        percent_digits=0, percent_pattern="{n} ({p_col})") %>% 
+  as_flextable(compact=TRUE, keep_id=FALSE) %>% 
+  set_caption(paste("Number of trips. 2022 calendar year"))
+
+```
+
++-------------------------------------------------------------------------------------------+
+| Number of trips                                                                           |
++===========================================================================================+
+| -   **Casual** riders **prefer e-bikes**                                                  |
++-------------------------------------------------------------------------------------------+
+| -   while Cyclistic's **members** choose e-bikes and classic bikes roughly equally        |
++-------------------------------------------------------------------------------------------+
+| -   **Members** use Cyclistics's services **much more often** than casual riders (+50 %). |
++-------------------------------------------------------------------------------------------+
 
 #### The mode of day of week throughout a year
 
@@ -1001,25 +867,25 @@ df %>%
   set_caption(paste("Cross table. Number of trips by Month and by day of the week", report_caption))
 ```
 
-+----------------------+----------------------+------------------------------+
-| Rider                | The mode             | Anti-mode\                   |
-|                      |                      | (the least frequent score)   |
-+======================+======================+==============================+
-| Member riders        | Thursday\            | Sunday                       |
-|                      | (Tue, Wed, Thu -     |                              |
-|                      | roughly equal)       |                              |
-+----------------------+----------------------+------------------------------+
-| Casual riders        | Saturday             | Monday - Tuesday             |
-+----------------------+----------------------+------------------------------+
-| Population           | Saturday             | Monday                       |
-+----------------------+----------------------+------------------------------+
+**Number of trips by day of the week. Insights:**
+
++---------------+---------------------------------------------------------------------+-----------------------------------+
+| Rider         | The mode                                                            | Anti-mode\                        |
+|               |                                                                     | (the least frequent score)        |
++===============+=====================================================================+===================================+
+| Member riders | Tue, Wed, Thu - roughly equal                                       | Sunday                            |
++---------------+---------------------------------------------------------------------+-----------------------------------+
+| Casual riders | Saturday                                                            | Monday - Tuesday                  |
++---------------+---------------------------------------------------------------------+-----------------------------------+
+| Population    | **Saturday**\                                                       | Monday\                           |
+|               | is the most busy day at Cyclistic's mainly thanks to casual riders. | is the least busy day of the week |
++---------------+---------------------------------------------------------------------+-----------------------------------+
 
 Insights:
 
 -   **Monday** is the least busy day of the week (anti-mode).
 
--   **Saturday** is the most busy day at Cyclistic's mainly thanks to casual
-    riders.
+-   **Saturday** is the most busy day at Cyclistic's mainly thanks to casual riders.
 
 ```{r Mode of day of week}
 
@@ -1074,8 +940,7 @@ df %>%
 
 Insights:
 
--   **Jan and Feb are the toughest month at Cyclistics**. The income is only \~
-    16% of year peaks.
+-   **Jan and Feb are the toughest month at Cyclistics**. The income is only \~ 16% of year peaks.
 
 -   **Members** generated **\~80% of income** during **Jan and Feb**.
 
@@ -1095,7 +960,7 @@ df %>%
   ggplot() +
   geom_col(aes(x = Month, y=aver, fill = member_casual),
            position = "dodge", alpha = 1) +
-  labs(title = "Monthly trip duration",
+  labs(title = "Average trip duration month by month",
        caption = report_caption,
        x ="", y= "Minutes",
        fill='Type of rider') +
@@ -1136,59 +1001,101 @@ df %>%
   set_caption(paste("Mean and median trip durations.", report_caption))
 ```
 
-### Conclusions
+## 5. SHARE
 
-We found a significant differences in behaviour among riders segments.\
-**Members** use Cyclistics to fulfill their day-day obligations, e.g. commute to
-work or school, run errands.\
+Guiding questions:
+
+1.  Were you able to answer the question of how annual members and casual riders use Cyclistic bikes differently?
+
+2.  What story does your data tell?
+
+3.  How do your findings relate to your original question?
+
+4.  Who is your audience? What is the best way to communicate with them?
+
+5.  Can data visualization help you share your findings?
+
+6.  Is your presentation accessible to your audience?
+
+### How casual riders and annual members use Cyclistic bikes differently?
+
+We have figured out a significant differences in behaviour among riders.\
+**Members** use Cyclistics to complete their daily activities, such as commuting to work or school, running errands.\
 Members ride more often but their trips are shorter.\
-**Casual** riders most likely use bike share to explore Chicago, get to
-appointments or social engagements, and more.
+**Casual** riders most likely use bike share to explore Chicago, get to appointments or social engagements, and more. And casual riders prefer e-bikes.
 
-+------------------+-----------------------------+---------------------------+
-|                  | members                     | casual riders             |
-+==================+=============================+===========================+
-| number of trips  |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| average trip     |                             |                           |
-| duration         |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| mode of day of   | Tue, Wed, Thu               | Sat                       |
-| week             |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| bike type        | doesn't matter              | e-bike                    |
-| preference       |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| anti-mode of day | Sun                         | Mon-Tue                   |
-| of week          |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| weather          | medium                      | high                      |
-| dependence       |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| seasonal         | medium\                     | high                      |
-| patterns\        | 1:4                         |                           |
-| Jan -Jul         |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| trip cost        |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| most likely      | commute to work or school,  | explore Chicago, get to   |
-| purpose of use   | run errands, performing     | appointments or social    |
-|                  | daily duties                | engagements               |
-+------------------+-----------------------------+---------------------------+
-| membership       | 119\$                       | 0\$                       |
-+------------------+-----------------------------+---------------------------+
-| classic bike     | 0\$                         | 1\$                       |
-| undocking        |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| electric bike    |                             | 2\$                       |
-| undocking        |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| classic bike 1   |                             |                           |
-| minute           |                             |                           |
-+------------------+-----------------------------+---------------------------+
-| electric bike 1  |                             |                           |
-| minute           |                             |                           |
-+------------------+-----------------------------+---------------------------+
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+|                                   | members                                                             | casual riders                                                              |
++===================================+=====================================================================+============================================================================+
+| number of trips\                  | \                                                                   | \                                                                          |
+| min-max per month                 | 83482 - 416457                                                      | 16997 - 363992                                                             |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| spread of trip duration per month | 10-13 min\                                                          | 12-22 min\                                                                 |
+|                                   | (Dec-Jun)                                                           | (Dec-May)                                                                  |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| year average trip duration        | 12.1                                                                | 18,4                                                                       |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| mode of day of week               | Tue, Wed, Thu                                                       | Sat                                                                        |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| anti-mode of day of week          | Sun                                                                 | Mon-Tue                                                                    |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| bike type preference              | doesn't matter                                                      | e-bike                                                                     |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| weather dependence                | medium                                                              | high                                                                       |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| seasonal patterns\                | medium\                                                             | very high\                                                                 |
+| Jan -Jul rides                    | 1:5                                                                 | 1:21                                                                       |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+| **most likely purpose of use**    | **commute to work or school, run errands, performing daily duties** | **explore Chicago, get to appointments or social engagements on weekends** |
++-----------------------------------+---------------------------------------------------------------------+----------------------------------------------------------------------------+
+
+### Why would casual riders buy Cyclistic annual memberships?
+
+So, how can we steer casual riders to became a Cyclistics member?\
+We should accent our offerings on the preferences that have been figured out in the report. It means we should include special e-bikes proposal into annual membership.
+
+1.  Annual **prime membership** which includes 30-45 minutes of e-bike rides a day.\
+    The price should be higher than ordinary membership, say 175-200 \$ but\
+    Additional research should be conducted about specific pricing parameters.
+
+2.  Customers may consider to buy personal e-bikes, but we should launch **an awareness campaign** about the benefits of e-bike sharing (charging, service, does not take up space in the apartment, not have to worry a single second about a bike being stolen, etc.)
+
+3.  Investigate most popular casual riders routes in Chicago and inform potential customers about future locations of dock stations. Conduct a survey among potential customers where to locate stations.
+
+Let's don't forget about our current customers. New proposal shouldn't contradict their current membership (accent on classic bike usage).
+
+### How can Cyclistic use digital media to influence casual riders to become members?
+
+1.  Use social networks to populate bike sharing.
+
+2.  Use direct targeting on potential customers. Send direct proposals using mobile app every customers have already installed.
+
+3.  Collaboration with local parks and attractions to populate bike using. Invest into popular bike apps like Komoot, Strava to inform local customers about Cyclistics.
+
+## 6. ACT
+
+1.  What is your final conclusion based on your analysis?\
+    Casual riders are not avid bikers. The are ready to pay more for e-bike rent.\
+    We have to make them an offer from which they are unlikely to refuse.
+
+2.  How could your team and business apply your insights?\
+    We need to develop a marketing campaign to promote e-bikes rent among members.
+
+3.  What next steps would you or your stakeholders take based on your findings?\
+    Invest time and efforts into additional exploration of potential customers and their needs, polishing special proposals among customers segments.
+
+4.  Is there additional data you could use to expand on your findings?\
+    Add Boston 2022 weather (temperature, precipitation)\
+    Add viz with geo data most pop stations\
+    Define a correlation member_casual - weather conditions.
+
+Additional work:
+
+1.  Add Boston 2022 weather (temperature, precipitation)
+
+2.  add viz with geo data most pop stations
+
+3.  correlation member_casual - weather conditions.
 
 ```{r}
 # geo_df <-
@@ -1216,17 +1123,3 @@ appointments or social engagements, and more.
 #                  colour = "red"))  # , label=station_name
 # ggplotly(insp_plt)
 ```
-
-# To-Dos
-
--   Finish the report as is -\> Conclusions
-
--   Add Boston 2022 weather (temperature, precipitation)
-
--   `trip_cost` add 2022 pricing
-
--   add viz with geo data most pop stations
-
--   correlation member_casual - weather
-
--   finalization of the report
